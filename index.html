@@ -6,6 +6,7 @@
     <title>Area Hub Premium</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        * { box-sizing: border-box; }
         body { background-color: #000000; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
         
         .fixed-header {
@@ -18,9 +19,9 @@
         .logo-text { color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; }
         .logo-text span { color: #ff9900; }
         
-        /* User Menu Bar */
+        /* Local Mini App Menu Tab */
         .user-menu { background-color: #111; display: flex; justify-content: space-around; padding: 8px 0; border-bottom: 1px solid #333; }
-        .menu-tab { color: #aaa; font-size: 13px; font-weight: bold; cursor: pointer; padding: 6px 12px; border-radius: 4px; }
+        .menu-tab { color: #aaa; font-size: 14px; font-weight: bold; cursor: pointer; padding: 6px 16px; border-radius: 4px; }
         .menu-tab.active { color: #000; background-color: #ff9900; }
 
         .search-container { padding: 10px 15px; background-color: #111; display: flex; gap: 8px; border-bottom: 1px solid #333; }
@@ -43,13 +44,6 @@
         .card-stats { display: flex; justify-content: space-between; padding: 0 6px 6px 6px; font-size: 11px; color: #888; }
         .share-btn-text { color: #ff9900; font-weight: bold; }
 
-        /* Telegram Login / Channel Join Wall */
-        .login-wall { padding: 40px 20px; text-align: center; background: #111; margin: 15px; border-radius: 8px; border: 1px solid #333; }
-        .login-wall h2 { color: #ff9900; margin-bottom: 15px; }
-        .tg-login-btn, .ch-join-btn { background-color: #2AABEE; color: #fff; border: none; padding: 12px 24px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: inline-block; text-decoration: none; margin: 8px 0; width: 80%; }
-        .ch-join-btn { background-color: #0088CC; }
-
-        /* Separate Pages */
         .page-panel { display: none; }
         .page-panel.active { display: block; }
 
@@ -76,27 +70,31 @@
         .comment-input-box { width: 100%; padding: 10px; background-color: #222; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
         .comment-list { margin-top: 12px; font-size: 13px; color: #ccc; }
         
-        /* လုံးဝ သန့်ရှင်းသော Download Page (ဗီဒီယို လုံးဝမပါဝင်သော Download Screen သီးသန့်) */
+        /* လုံးဝ သန့်ရှင်းသော Download Page (ဗီဒီယို လုံးဝမပါ၊ ဒေါင်းလုဒ်သီးသန့် Screen) */
         .download-page-box { padding: 20px; text-align: center; background-color: #111; margin: 15px; border-radius: 6px; border: 1px solid #333; }
         .download-title { color: #ff9900; font-size: 18px; font-weight: bold; margin-bottom: 15px; }
+        
+        /* အလိုအလျောက် 5 စက္ကန့် ቆጠራပြေးမည့် ကြော်ငြာစနစ် (ပုံစံအသစ်) */
         .download-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .countdown-msg { color: #ff9900; font-size: 18px; font-weight: bold; margin-bottom: 16px; text-align: center; line-height: 1.5; }
         .skip-btn { background-color: #ff9900; color: #000; padding: 12px 28px; border: none; border-radius: 4px; font-weight: bold; font-size: 15px; cursor: pointer; display: none; }
         .start-dl-btn { background-color: #ff9900; color: #000; padding: 14px 28px; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; width: 100%; max-width: 250px; }
+        
+        /* Inline Ads Style for Download Page */
+        .dl-inline-ad { background-color: #1a1a1a; border: 1px solid #333; padding: 10px; margin-bottom: 15px; border-radius: 4px; font-size: 12px; color: #ff9900; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="fixed-header">
         <div class="nav-bar">
-            <div class="logo-text" onclick="switchTab('homeTab')">❌<span>VIDEOS</span></div>
+            <div class="logo-text" onclick="switchTab('home')">❌<span>VIDEOS</span></div>
             <div style="font-size: 12px; color: #ff9900; font-weight: bold;">PREMIUM CLUB</div>
         </div>
         
         <div class="user-menu">
             <div class="menu-tab active" id="homeTabBtn" onclick="switchTab('home')">🏠 HOME</div>
             <div class="menu-tab" id="favTabBtn" onclick="switchTab('favorites')">❤️ FAVORITES</div>
-            <div class="menu-tab" id="tgTabBtn" onclick="switchTab('tg_login')">🔐 TG LOGIN</div>
         </div>
 
         <div class="search-container">
@@ -107,28 +105,16 @@
 
     <div class="page-content">
         
-        <div class="page-panel" id="tgLoginPanel">
-            <div class="login-wall">
-                <h2>Telegram Authentication Required</h2>
-                <p style="color: #888; margin-bottom: 20px;">ကျေးဇူးပြု၍ Telegram ဖြင့် Login ဝင်ပြီး Channel ကို Join မှသာ ဗီဒီယိုများကို ကြည့်ရှုနိုင်မည်ဖြစ်ပါသည်။</p>
-                <a href="https://t.me/telegram_bot" class="tg-login-btn" target="_blank">📲 Login via Telegram</a>
-                <br>
-                <a href="https://t.me/your_channel_link" class="ch-join-btn" target="_blank">📢 Join Our Channel</a>
-            </div>
-        </div>
-
         <div class="page-panel" id="favoritesPanel">
             <div class="home-title">❤️ YOUR FAVORITE COLLECTION</div>
-            <div style="padding: 40px; text-align: center; color: #666; font-style: italic;">
-                Favorite သိမ်းထားသော ဗီဒီယိုများ မရှိသေးပါ။ <br> Database (Supabase/Firebase) ချိတ်ဆက်ပြီးပါက ဤနေရာတွင် ပေါ်လာပါမည်။
-            </div>
+            <div class="related-grid" id="favGrid"></div>
         </div>
 
         <div class="page-panel active" id="homePanel">
             <div id="homePage">
                 <div class="inline-ad">
-                    <div class="inline-ad-title">🔥 CHATURBATE INLINE ADS</div>
-                    <div class="inline-ad-text">SHE DOESN'T PLAY INNOCENT 😈</div>
+                    <div class="inline-ad-title">🔥 INLINE ADS</div>
+                    <div class="inline-ad-text">PREMIUM CONTENT AREA 😈</div>
                 </div>
                 <div class="home-title">FEATURED PREMIUM VIDEOS</div>
                 <div class="related-grid" id="homeGrid">
@@ -140,7 +126,7 @@
                         <div class="related-info"><div class="related-title">Beautiful Asian Private Show Mix Collection</div></div>
                         <div class="card-stats">
                             <span>👁️ 1.2M Views</span>
-                            <span class="share-btn-text" onclick="event.stopPropagation(); alert('Link copied to clipboard!');">🔗 Share</span>
+                            <span class="share-btn-text" onclick="event.stopPropagation(); copyLink('Beautiful Asian Private Show Mix Collection');">🔗 Share</span>
                         </div>
                     </div>
                     <div class="related-card" onclick="loadVideoPage('Premium Exclusive Studio Collection Movie (1080p)')">
@@ -151,7 +137,7 @@
                         <div class="related-info"><div class="related-title">Premium Exclusive Studio Collection Movie (1080p)</div></div>
                         <div class="card-stats">
                             <span>👁️ 10M Views</span>
-                            <span class="share-btn-text" onclick="event.stopPropagation(); alert('Link copied to clipboard!');">🔗 Share</span>
+                            <span class="share-btn-text" onclick="event.stopPropagation(); copyLink('Premium Exclusive Studio Collection Movie (1080p)');">🔗 Share</span>
                         </div>
                     </div>
                 </div>
@@ -176,7 +162,7 @@
                 <h1 class="video-main-title" id="mainTitle">Video Title</h1>
                 <div class="action-row">
                     <button class="action-btn" id="openDownloadPageBtn">📥 Download Video Page</button>
-                    <button class="action-btn" id="favoriteBtn">❤️ Favorite</button>
+                    <button class="action-btn" id="favoriteBtn" onclick="toggleFavorite()">❤️ Favorite</button>
                 </div>
             </div>
 
@@ -210,9 +196,14 @@
         <div class="page-panel" id="downloadPage">
             <div class="back-home-row"><button class="back-btn" id="backToVideoBtn">⬅ Back to Video</button></div>
             <div class="download-page-box">
+                <div class="dl-inline-ad">
+                    <div style="font-weight: bold; color: #ff4500; margin-bottom: 3px;">📢 SPONSORED ADS</div>
+                    Get a new Bonus offer today! Dial *555# or use the app to redeem.
+                </div>
+                
                 <div class="download-title" id="dlPageTitle">Download Video: Title</div>
                 <p style="color: #aaa; font-size: 13px; margin-bottom: 20px;">ဖိုင်များကို တိုက်ရိုက်ဖုန်းထဲသို့ ဒေါင်းလုဒ်ဆွဲရန် အသင့်ဖြစ်ပါပြီ။ အောက်ပါခလုတ်ကို နှိပ်ပါ။</p>
-                <button class="start-dl-btn" id="startDownloadBtn">📥 START DOWNLOAD</button>
+                <button class="start-dl-btn" id="startDownloadBtn">📥 AUTO DOWNLOAD</button>
             </div>
         </div>
 
@@ -233,23 +224,21 @@
         const homePanel = document.getElementById('homePanel');
         const playerPage = document.getElementById('playerPage');
         const downloadPage = document.getElementById('downloadPage');
-        const tgLoginPanel = document.getElementById('tgLoginPanel');
         const favoritesPanel = document.getElementById('favoritesPanel');
 
         const homeTabBtn = document.getElementById('homeTabBtn');
         const favTabBtn = document.getElementById('favTabBtn');
-        const tgTabBtn = document.getElementById('tgTabBtn');
+
+        let currentVideoTitle = "";
 
         function hideAllPanels() {
             homePanel.style.display = 'none';
             playerPage.style.display = 'none';
             downloadPage.style.display = 'none';
-            tgLoginPanel.style.display = 'none';
             favoritesPanel.style.display = 'none';
 
             homeTabBtn.classList.remove('active');
             favTabBtn.classList.remove('active');
-            tgTabBtn.classList.remove('active');
         }
 
         function switchTab(tabName) {
@@ -261,9 +250,7 @@
             } else if (tabName === 'favorites') {
                 favoritesPanel.style.display = 'block';
                 favTabBtn.classList.add('active');
-            } else if (tabName === 'tg_login') {
-                tgLoginPanel.style.display = 'block';
-                tgTabBtn.classList.add('active');
+                renderFavorites();
             }
         }
 
@@ -271,6 +258,7 @@
 
         function loadVideoPage(title) {
             hideAllPanels();
+            currentVideoTitle = title;
             document.getElementById('mainTitle').innerText = title;
             document.getElementById('dlPageTitle').innerText = 'Download: ' + title;
             playerPage.style.display = 'block';
@@ -284,6 +272,9 @@
             document.getElementById('inlinePlayBtn').style.display = 'block';
             
             document.getElementById('commentList').innerHTML = '<div><em>No comments yet. Be the first to comment!</em></div>';
+            
+            // update favorite button UI
+            updateFavBtnUI();
         }
 
         document.getElementById('backBtn').onclick = () => {
@@ -326,7 +317,7 @@
             inlineVideo.play();
         };
 
-        // Download Page မှ Download ခလုတ်နှိပ်လျှင် ဗီဒီယို လုံးဝမပေါ်ဘဲ Ad 5s စောင့်ပြီး ဖုန်းထဲသို့ တိုက်ရိုက်ဒေါင်းလုဒ်ကျမည့်စနစ်
+        // Download Page မှ AUTO DOWNLOAD ခလုတ်နှိပ်လျှင် Ad 5s အလိုအလျောက်စောင့်ပြီး SKIP ခလုတ်ပေါ်လာမည့်စနစ်
         const downloadAdOverlay = document.getElementById('downloadAdOverlay');
         const dlSkipAdBtn = document.getElementById('dlSkipAdBtn');
         const hiddenDownloadLink = document.getElementById('hiddenDownloadLink');
@@ -335,7 +326,7 @@
             downloadAdOverlay.style.display = 'flex';
             dlSkipAdBtn.style.display = 'none';
             
-            // 5 စက္ကန့် အလိုအလျောက် ቆጠራ ပြီးမှ ခလုတ်ပေါ်စေရန်
+            // 5 စက္ကန့် အလိုအလျောက် ቆጠራ ပြီးမှ Skip ခလုတ်ပေါ်စေရန်
             setTimeout(() => {
                 dlSkipAdBtn.style.display = 'block';
             }, 5000);
@@ -354,10 +345,6 @@
             }
         };
 
-        document.getElementById('favoriteBtn').onclick = () => {
-            alert('Added to your Favorite collection ❤️! (Database / Backend required to permanently save).');
-        };
-
         document.getElementById('commentInput').onkeypress = function(e) {
             if (e.key === 'Enter' && this.value.trim() !== '') {
                 const commentList = document.getElementById('commentList');
@@ -372,6 +359,69 @@
                 alert('Comment posted!');
             }
         };
+
+        // --- Local Storage Favorites စနစ် ---
+        function getFavorites() {
+            let favs = localStorage.getItem('app_favorites');
+            return favs ? JSON.parse(favs) : [];
+        }
+
+        function updateFavBtnUI() {
+            let favs = getFavorites();
+            let btn = document.getElementById('favoriteBtn');
+            if (favs.includes(currentVideoTitle)) {
+                btn.innerHTML = '❤️ Favorited';
+            } else {
+                btn.innerHTML = '❤️ Favorite';
+            }
+        }
+
+        function toggleFavorite() {
+            let favs = getFavorites();
+            let index = favs.indexOf(currentVideoTitle);
+            
+            if (index > -1) {
+                // ဖယ်ထုတ်သည်
+                favs.splice(index, 1);
+                alert('Removed from Favorites!');
+            } else {
+                // ထည့်သည်
+                favs.push(currentVideoTitle);
+                alert('Added to Favorites!');
+            }
+            
+            localStorage.setItem('app_favorites', JSON.stringify(favs));
+            updateFavBtnUI();
+        }
+
+        function renderFavorites() {
+            let favs = getFavorites();
+            let grid = document.getElementById('favGrid');
+            grid.innerHTML = '';
+            
+            if (favs.length === 0) {
+                grid.innerHTML = '<div style="padding: 40px; text-align: center; color: #666; font-style: italic; grid-column: span 2;">Favorite သိမ်းဆည်းထားသော ဗီဒီယိုများ မရှိသေးပါ။</div>';
+                return;
+            }
+            
+            favs.forEach(title => {
+                let card = document.createElement('div');
+                card.className = 'related-card';
+                card.onclick = () => loadVideoPage(title);
+                card.innerHTML = `
+                    <div class="related-thumb">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
+                        <div class="v-duration">Exclusive</div>
+                    </div>
+                    <div class="related-info"><div class="related-title">${title}</div></div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        function copyLink(title) {
+            alert('Link copied to clipboard for: ' + title);
+        }
     </script>
 </body>
 </html>
