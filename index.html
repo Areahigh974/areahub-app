@@ -3,419 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Area Hub Premium</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Downloader</title>
     <style>
-        * { box-sizing: border-box; }
-        body { background-color: #000000; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        body { font-family: sans-serif; margin: 0; background-color: #f4f4f4; padding-bottom: 60px; }
+        .header { padding: 15px; font-size: 20px; font-weight: bold; background: #fff; border-bottom: 1px solid #ddd; }
         
-        .fixed-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: #000;
-        }
-        .nav-bar { background-color: #1a1a1a; padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #ff9900; }
-        .logo-text { color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; }
-        .logo-text span { color: #ff9900; }
+        /* Inline Ads Style */
+        .inline-ads { background: #fff; padding: 10px; margin: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .sub-btn { background: #0088cc; color: #fff; border: none; padding: 10px; width: 100%; margin-top: 10px; font-weight: bold; }
         
-        /* Local Mini App Menu Tab (TG Login လုံးဝမပါဝင်တော့ပါ) */
-        .user-menu { background-color: #111; display: flex; justify-content: space-around; padding: 8px 0; border-bottom: 1px solid #333; }
-        .menu-tab { color: #aaa; font-size: 14px; font-weight: bold; cursor: pointer; padding: 6px 16px; border-radius: 4px; }
-        .menu-tab.active { color: #000; background-color: #ff9900; }
+        /* Video List Item */
+        .video-item { display: flex; align-items: center; padding: 10px; background: #fff; margin-bottom: 5px; }
+        .thumb { width: 100px; height: 60px; background: #ddd; margin-right: 10px; }
+        .info { flex: 1; }
+        
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: #fff; padding: 10px 0; border-top: 1px solid #ddd; }
+        .nav-item { text-align: center; color: #888; font-size: 12px; cursor: pointer; }
+        .nav-item.active { color: #0088cc; }
+        
+        .page { display: none; }
+        .page.active { display: block; }
 
-        .search-container { padding: 10px 15px; background-color: #111; display: flex; gap: 8px; border-bottom: 1px solid #333; }
-        .search-input { flex: 1; padding: 8px; background-color: #222; border: 1px solid #333; color: #fff; border-radius: 4px; }
-        .search-btn { background-color: #ff9900; color: #000; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; }
-        
-        .page-content { padding-top: 5px; }
-        .inline-ad { background-color: #222; margin: 10px; padding: 12px; border-radius: 4px; border: 1px dashed #ff9900; text-align: center; }
-        .inline-ad-title { color: #ff4500; font-size: 13px; font-weight: bold; margin-bottom: 4px; }
-        .inline-ad-text { color: #ddd; font-size: 14px; }
-
-        .home-title { padding: 12px; font-size: 15px; font-weight: bold; color: #ff9900; background-color: #0d0d0d; border-left: 3px solid #ff9900; }
-        .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 12px; }
-        .related-card { background-color: #111; border-radius: 4px; overflow: hidden; border: 1px solid #222; cursor: pointer; }
-        .related-thumb { width: 100%; height: 100px; background-color: #222; position: relative; }
-        .related-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .v-duration { position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); color: #ff9900; font-size: 10px; padding: 1px 3px; border-radius: 2px; }
-        .related-info { padding: 6px; }
-        .related-title { font-size: 12px; font-weight: bold; color: #ccc; height: 32px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .card-stats { display: flex; justify-content: space-between; padding: 0 6px 6px 6px; font-size: 11px; color: #888; }
-        .share-btn-text { color: #ff9900; font-weight: bold; }
-
-        .page-panel { display: none; }
-        .page-panel.active { display: block; }
-
-        .player-page { display: none; }
-        .back-home-row { padding: 10px 15px; background: #111; }
-        .back-btn { background: none; border: none; color: #ff9900; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        
-        .main-player-box { width: 100%; background-color: #111; position: relative; }
-        .video-screen { width: 100%; height: 230px; background-color: #000; display: flex; align-items: center; justify-content: center; position: relative; }
-        .play-trigger-btn { background-color: #ff9900; color: #000; border: none; border-radius: 50%; width: 65px; height: 65px; font-size: 28px; cursor: pointer; font-weight: bold; z-index: 10; }
-        
-        .actual-video { width: 100%; height: 100%; display: none; object-fit: contain; }
-        
-        .inline-ad-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 15; }
-        .ad-msg-box { color: #ff9900; font-size: 15px; font-weight: bold; text-align: center; margin-bottom: 12px; }
-        .ad-skip-btn { background-color: #ff9900; color: #000; padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; cursor: pointer; display: none; }
-        
-        .video-details { padding: 12px; border-bottom: 1px solid #222; background: #111; }
-        .video-main-title { font-size: 16px; font-weight: bold; color: #fff; margin: 0 0 8px 0; }
-        .action-row { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
-        .action-btn { background-color: #1a1a1a; color: #ff9900; border: 1px solid #333; padding: 8px 14px; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; }
-        
-        .comments-section { padding: 15px; background-color: #1a1a1a; border-top: 1px solid #333; }
-        .comment-input-box { width: 100%; padding: 10px; background-color: #222; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
-        .comment-list { margin-top: 12px; font-size: 13px; color: #ccc; }
-        
-        /* သန့်ရှင်းသော Download Page (ဗီဒီယို လုံးဝမပါဝင်ပါ) */
-        .download-page-box { padding: 20px; text-align: center; background-color: #111; margin: 15px; border-radius: 6px; border: 1px solid #333; }
-        .download-title { color: #ff9900; font-size: 18px; font-weight: bold; margin-bottom: 15px; }
-        
-        .download-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .countdown-msg { color: #ff9900; font-size: 18px; font-weight: bold; margin-bottom: 16px; text-align: center; line-height: 1.5; }
-        .skip-btn { background-color: #ff9900; color: #000; padding: 12px 28px; border: none; border-radius: 4px; font-weight: bold; font-size: 15px; cursor: pointer; display: none; }
-        .start-dl-btn { background-color: #ff9900; color: #000; padding: 14px 28px; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; width: 100%; max-width: 250px; }
-        
-        .dl-inline-ad { background-color: #1a1a1a; border: 1px solid #333; padding: 10px; margin-bottom: 15px; border-radius: 4px; font-size: 12px; color: #ff9900; text-align: center; }
+        /* Ad Overlay */
+        #adOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); color: #fff; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
     </style>
 </head>
 <body>
 
-    <div class="fixed-header">
-        <div class="nav-bar">
-            <div class="logo-text" onclick="switchTab('home')">❌<span>VIDEOS</span></div>
-            <div style="font-size: 12px; color: #ff9900; font-weight: bold;">PREMIUM CLUB</div>
-        </div>
-        
-        <div class="user-menu">
-            <div class="menu-tab active" id="homeTabBtn" onclick="switchTab('home')">🏠 HOME</div>
-            <div class="menu-tab" id="favTabBtn" onclick="switchTab('favorites')">❤️ FAVORITES</div>
-        </div>
+<div class="header">Downloader</div>
 
-        <div class="search-container">
-            <input type="text" class="search-input" id="searchInput" placeholder="Search videos...">
-            <button class="search-btn" id="searchBtn">Search</button>
-        </div>
+<!-- Home Page -->
+<div id="homePage" class="page active">
+    <div class="inline-ads">
+        <div>Limited Offer</div>
+        <div style="font-size: 14px;">Get a new Bonus offer today! Dial *555# or use the MPT4U app to redeem.</div>
+        <button class="sub-btn">SUBSCRIBE</button>
     </div>
-
-    <div class="page-content">
-        
-        <div class="page-panel" id="favoritesPanel">
-            <div class="home-title">❤️ YOUR FAVORITE COLLECTION</div>
-            <div class="related-grid" id="favGrid"></div>
-        </div>
-
-        <div class="page-panel active" id="homePanel">
-            <div id="homePage">
-                <div class="inline-ad">
-                    <div class="inline-ad-title">🔥 INLINE ADS</div>
-                    <div class="inline-ad-text">PREMIUM CONTENT AREA 😈</div>
-                </div>
-                <div class="home-title">FEATURED PREMIUM VIDEOS</div>
-                <div class="related-grid" id="homeGrid">
-                    <div class="related-card" onclick="loadVideoPage('Beautiful Asian Private Show Mix Collection')">
-                        <div class="related-thumb">
-                            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
-                            <div class="v-duration">21 min</div>
-                        </div>
-                        <div class="related-info"><div class="related-title">Beautiful Asian Private Show Mix Collection</div></div>
-                        <div class="card-stats">
-                            <span>👁️ 1.2M Views</span>
-                            <span class="share-btn-text" onclick="event.stopPropagation(); copyLink('Beautiful Asian Private Show Mix Collection');">🔗 Share</span>
-                        </div>
-                    </div>
-                    <div class="related-card" onclick="loadVideoPage('Premium Exclusive Studio Collection Movie (1080p)')">
-                        <div class="related-thumb">
-                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
-                            <div class="v-duration">15 min</div>
-                        </div>
-                        <div class="related-info"><div class="related-title">Premium Exclusive Studio Collection Movie (1080p)</div></div>
-                        <div class="card-stats">
-                            <span>👁️ 10M Views</span>
-                            <span class="share-btn-text" onclick="event.stopPropagation(); copyLink('Premium Exclusive Studio Collection Movie (1080p)');">🔗 Share</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="player-page" id="playerPage">
-            <div class="back-home-row"><button class="back-btn" id="backBtn">⬅ Back to Home</button></div>
-            
-            <div class="main-player-box">
-                <div class="video-screen">
-                    <button class="play-trigger-btn" id="inlinePlayBtn">▶</button>
-                    <video class="actual-video" id="inlineVideo" controls><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
-                    <div class="inline-ad-overlay" id="inlineAdOverlayBox">
-                        <div class="ad-msg-box">Sponsored Ad: Video will start in <span id="AdSecBox">5</span>s...</div>
-                        <button class="ad-skip-btn" id="SkipBtnBox">SKIP AD & PLAY</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="video-details">
-                <h1 class="video-main-title" id="mainTitle">Video Title</h1>
-                <div class="action-row">
-                    <button class="action-btn" id="openDownloadPageBtn">📥 Download Video Page</button>
-                    <button class="action-btn" id="favoriteBtn" onclick="toggleFavorite()">❤️ Favorite</button>
-                </div>
-            </div>
-
-            <div class="comments-section">
-                <div style="font-weight: bold; font-size: 14px; color: #ff9900; margin-bottom: 8px;">Comments</div>
-                <input type="text" class="comment-input-box" id="commentInput" placeholder="Write a comment and press Enter...">
-                <div class="comment-list" id="commentList">
-                    <div><em>No comments yet. Be the first to comment!</em></div>
-                </div>
-            </div>
-
-            <div class="home-title" style="border-left: 3px solid #ff4500; background: #111;">SIMILAR VIDEOS</div>
-            <div class="related-grid" style="background: #000;">
-                <div class="related-card" onclick="loadVideoPage('Beautiful Asian Private Show Mix Collection')">
-                    <div class="related-thumb">
-                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
-                        <div class="v-duration">21 min</div>
-                    </div>
-                    <div class="related-info"><div class="related-title">Beautiful Asian Private Show Mix Collection</div></div>
-                </div>
-                <div class="related-card" onclick="loadVideoPage('Premium Exclusive Studio Collection Movie (1080p)')">
-                    <div class="related-thumb">
-                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
-                        <div class="v-duration">15 min</div>
-                    </div>
-                    <div class="related-info"><div class="related-title">Premium Exclusive Studio Collection Movie (1080p)</div></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-panel" id="downloadPage">
-            <div class="back-home-row"><button class="back-btn" id="backToVideoBtn">⬅ Back to Video</button></div>
-            <div class="download-page-box">
-                <div class="dl-inline-ad">
-                    <div style="font-weight: bold; color: #ff4500; margin-bottom: 3px;">📢 SPONSORED ADS</div>
-                    Get a new Bonus offer today! Dial *555# or use the app to redeem.
-                </div>
-                
-                <div class="download-title" id="dlPageTitle">Download Video: Title</div>
-                <p style="color: #aaa; font-size: 13px; margin-bottom: 20px;">ဖိုင်များကို တိုက်ရိုက်ဖုန်းထဲသို့ ဒေါင်းလုဒ်ဆွဲရန် အသင့်ဖြစ်ပါပြီ။ အောက်ပါခလုတ်ကို နှိပ်ပါ။</p>
-                <button class="start-dl-btn" id="startDownloadBtn">📥 AUTO DOWNLOAD</button>
-            </div>
-        </div>
-
+    
+    <div class="video-item" onclick="showAd()">
+        <div class="thumb"></div>
+        <div class="info">Video Title 01</div>
     </div>
+</div>
 
-    <div class="download-ad-overlay" id="downloadAdOverlay">
-        <div class="countdown-msg">ကျေးဇူးပြု၍ ကြော်ငြာ (5) စက္ကန့် စောင့်ပေးပါ...<br>ဒေါင်းလုဒ်ဆွဲရန် အသင့်ဖြစ်ပါပြီ။</div>
-        <button class="skip-btn" id="dlSkipAdBtn">SKIP AD & DOWNLOAD</button>
+<!-- Downloads Page -->
+<div id="downloadsPage" class="page">
+    <div class="video-item">
+        <div class="thumb"></div>
+        <div class="info">Auto Downloaded File</div>
     </div>
+</div>
 
-    <a id="hiddenDownloadLink" href="https://www.w3schools.com/html/mov_bbb.mp4" download="Premium_Video.mp4" style="display: none;"></a>
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+    <div class="nav-item active" onclick="switchPage('home')">🏠<br>Home</div>
+    <div class="nav-item" onclick="switchPage('downloads')">⬇️<br>Downloads</div>
+</div>
 
-    <script>
-        window.Telegram.WebApp.ready();
-        window.Telegram.WebApp.expand();
+<!-- Ad Overlay -->
+<div id="adOverlay">
+    <p id="timerText">Please wait 5 seconds...</p>
+</div>
 
-        // Page Routing Logic
-        const homePanel = document.getElementById('homePanel');
-        const playerPage = document.getElementById('playerPage');
-        const downloadPage = document.getElementById('downloadPage');
-        const favoritesPanel = document.getElementById('favoritesPanel');
+<script>
+    function switchPage(page) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById(page + 'Page').classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
 
-        const homeTabBtn = document.getElementById('homeTabBtn');
-        const favTabBtn = document.getElementById('favTabBtn');
-
-        let currentVideoTitle = "";
-
-        function hideAllPanels() {
-            homePanel.style.display = 'none';
-            playerPage.style.display = 'none';
-            downloadPage.style.display = 'none';
-            favoritesPanel.style.display = 'none';
-
-            homeTabBtn.classList.remove('active');
-            favTabBtn.classList.remove('active');
-        }
-
-        function switchTab(tabName) {
-            hideAllPanels();
-            window.scrollTo(0,0);
-            if (tabName === 'home') {
-                homePanel.style.display = 'block';
-                homeTabBtn.classList.add('active');
-            } else if (tabName === 'favorites') {
-                favoritesPanel.style.display = 'block';
-                favTabBtn.classList.add('active');
-                renderFavorites();
-            }
-        }
-
-        const inlineVideo = document.getElementById('inlineVideo');
-
-        function loadVideoPage(title) {
-            hideAllPanels();
-            currentVideoTitle = title;
-            document.getElementById('mainTitle').innerText = title;
-            document.getElementById('dlPageTitle').innerText = 'Download: ' + title;
-            playerPage.style.display = 'block';
-            window.scrollTo(0,0);
-            
-            inlineVideo.style.display = 'none';
-            inlineVideo.pause();
-            inlineVideo.currentTime = 0;
-            document.getElementById('inlineAdOverlayBox').style.display = 'none';
-            document.getElementById('SkipBtnBox').style.display = 'none';
-            document.getElementById('inlinePlayBtn').style.display = 'block';
-            
-            document.getElementById('commentList').innerHTML = '<div><em>No comments yet. Be the first to comment!</em></div>';
-            
-            updateFavBtnUI();
-        }
-
-        document.getElementById('backBtn').onclick = () => {
-            switchTab('home');
-        };
-
-        // သီးသန့် Download Page သို့ ကူးပြောင်းခြင်း
-        document.getElementById('openDownloadPageBtn').onclick = () => {
-            playerPage.style.display = 'none';
-            downloadPage.style.display = 'block';
-            window.scrollTo(0,0);
-        };
-
-        document.getElementById('backToVideoBtn').onclick = () => {
-            downloadPage.style.display = 'none';
-            playerPage.style.display = 'block';
-            window.scrollTo(0,0);
-        };
-
-        // ဗီဒီယို Screen အတွင်း Ad 5sec countdown ပြေးခြင်း
-        document.getElementById('inlinePlayBtn').onclick = () => {
-            document.getElementById('inlinePlayBtn').style.display = 'none';
-            document.getElementById('inlineAdOverlayBox').style.display = 'flex';
-            let sec = 5;
-            document.getElementById('AdSecBox').innerText = sec;
-            
-            let timer = setInterval(()=>{
-                sec--;
-                document.getElementById('AdSecBox').innerText = sec;
-                if(sec <= 0) { 
-                    clearInterval(timer); 
-                    document.getElementById('SkipBtnBox').style.display = 'block'; 
-                }
-            }, 1000);
-        };
-
-        document.getElementById('SkipBtnBox').onclick = () => {
-            document.getElementById('inlineAdOverlayBox').style.display = 'none';
-            inlineVideo.style.display = 'block';
-            inlineVideo.play();
-        };
-
-        // Download Page မှ AUTO DOWNLOAD ခလုတ်နှိပ်လျှင် Ad 5s အလိုအလျောက်စောင့်ပြီး SKIP ခလုတ်ပေါ်လာမည့်စနစ်
-        const downloadAdOverlay = document.getElementById('downloadAdOverlay');
-        const dlSkipAdBtn = document.getElementById('dlSkipAdBtn');
-        const hiddenDownloadLink = document.getElementById('hiddenDownloadLink');
-
-        document.getElementById('startDownloadBtn').onclick = () => {
-            downloadAdOverlay.style.display = 'flex';
-            dlSkipAdBtn.style.display = 'none';
-            
-            // 5 စက္ကန့် အလိုအလျောက် ቆጠራ ပြီးမှ Skip ခလုတ်ပေါ်စေရန်
-            setTimeout(() => {
-                dlSkipAdBtn.style.display = 'block';
-            }, 5000);
-        };
-
-        dlSkipAdBtn.onclick = () => {
-            downloadAdOverlay.style.display = 'none';
-            hiddenDownloadLink.click(); 
-        };
-
-        document.getElementById('searchBtn').onclick = () => {
-            const query = document.getElementById('searchInput').value;
-            if (query) {
-                alert('Searching for: ' + query);
-            }
-        };
-
-        document.getElementById('commentInput').onkeypress = function(e) {
-            if (e.key === 'Enter' && this.value.trim() !== '') {
-                const commentList = document.getElementById('commentList');
-                if (commentList.innerHTML.includes('No comments yet')) {
-                    commentList.innerHTML = '';
-                }
-                const newComment = document.createElement('div');
-                newComment.style.marginBottom = '6px';
-                newComment.innerHTML = `<strong>User:</strong> ${this.value}`;
-                commentList.appendChild(newComment);
-                this.value = '';
-                alert('Comment posted!');
-            }
-        };
-
-        // --- Local Storage Favorites စနစ် ---
-        function getFavorites() {
-            let favs = localStorage.getItem('app_favorites');
-            return favs ? JSON.parse(favs) : [];
-        }
-
-        function updateFavBtnUI() {
-            let favs = getFavorites();
-            let btn = document.getElementById('favoriteBtn');
-            if (favs.includes(currentVideoTitle)) {
-                btn.innerHTML = '❤️ Favorited';
-            } else {
-                btn.innerHTML = '❤️ Favorite';
-            }
-        }
-
-        function toggleFavorite() {
-            let favs = getFavorites();
-            let index = favs.indexOf(currentVideoTitle);
-            
-            if (index > -1) {
-                favs.splice(index, 1);
-                alert('Removed from Favorites!');
-            } else {
-                favs.push(currentVideoTitle);
-                alert('Added to Favorites!');
-            }
-            
-            localStorage.setItem('app_favorites', JSON.stringify(favs));
-            updateFavBtnUI();
-        }
-
-        function renderFavorites() {
-            let favs = getFavorites();
-            let grid = document.getElementById('favGrid');
-            grid.innerHTML = '';
-            
-            if (favs.length === 0) {
-                grid.innerHTML = '<div style="padding: 40px; text-align: center; color: #666; font-style: italic; grid-column: span 2;">Favorite သိမ်းဆည်းထားသော ဗီဒီယိုများ မရှိသေးပါ။</div>';
-                return;
-            }
-            
-            favs.forEach(title => {
-                let card = document.createElement('div');
-                card.className = 'related-card';
-                card.onclick = () => loadVideoPage(title);
-                card.innerHTML = `
-                    <div class="related-thumb">
-                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
-                        <div class="v-duration">Exclusive</div>
-                    </div>
-                    <div class="related-info"><div class="related-title">${title}</div></div>
-                `;
-                grid.appendChild(card);
-            });
-        }
+    function showAd() {
+        const overlay = document.getElementById('adOverlay');
+        const timerText = document.getElementById('timerText');
+        overlay.style.display = 'flex';
+        let count = 5;
         
-        function copyLink(title) {
-            alert('Link copied to clipboard for: ' + title);
-        }
-    </script>
+        let interval = setInterval(() => {
+            count--;
+            timerText.innerText = "Please wait " + count + " seconds...";
+            if(count <= 0) {
+                clearInterval(interval);
+                overlay.style.display = 'none';
+                alert("Auto Downloading now...");
+                switchPage('downloads');
+            }
+        }, 1000);
+    }
+</script>
+
 </body>
 </html>
