@@ -70,118 +70,9 @@
             color: #ddd;
             font-size: 14px;
         }
-        .main-player-box {
-            width: 100%;
-            background-color: #111;
-            position: relative;
-        }
-        .video-screen {
-            width: 100%;
-            height: 230px;
-            background-color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .play-trigger-btn {
-            background-color: #ff9900;
-            color: #000;
-            border: none;
-            border-radius: 50%;
-            width: 65px;
-            height: 65px;
-            font-size: 28px;
-            cursor: pointer;
-            font-weight: bold;
-            z-index: 5;
-        }
-        .ad-countdown-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-        }
-        .countdown-msg {
-            color: #ff9900;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: center;
-            padding: 0 20px;
-        }
-        .skip-btn {
-            background-color: #ff9900;
-            color: #000;
-            padding: 10px 24px;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            display: none;
-        }
-        .actual-video {
-            width: 100%;
-            height: 100%;
-            display: none;
-        }
-        .video-details {
-            padding: 12px;
-            border-bottom: 1px solid #222;
-        }
-        .video-main-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            margin: 0 0 8px 0;
-        }
-        .action-row {
-            display: flex;
-            gap: 15px;
-            margin-top: 12px;
-            padding-bottom: 5px;
-        }
-        .action-btn {
-            background-color: #1a1a1a;
-            color: #ff9900;
-            border: 1px solid #333;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .comments-section {
-            padding: 15px;
-            background-color: #111;
-            border-bottom: 1px solid #222;
-        }
-        .comment-input-box {
-            width: 100%;
-            padding: 8px;
-            background-color: #222;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-top: 8px;
-        }
-        .comment-list {
-            margin-top: 12px;
-            font-size: 13px;
-            color: #bbb;
-        }
-        .related-section-title {
+
+        /* Home Page Related Videos Grid */
+        .home-title {
             padding: 12px;
             font-size: 15px;
             font-weight: bold;
@@ -192,7 +83,7 @@
         .related-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+            gap: 10px;
             padding: 12px;
         }
         .related-card {
@@ -236,7 +127,156 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
+        .card-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 6px 6px 6px;
+            font-size: 10px;
+            color: #666;
+        }
 
+        /* Video Player Page Styles */
+        .player-page {
+            display: none;
+        }
+        .back-home-row {
+            padding: 10px 15px;
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: #ff9900;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* Inline Player Ad System (Screen အတွင်း၌သာ Ad ပြေးခြင်း) */
+        .main-player-box {
+            width: 100%;
+            background-color: #111;
+            position: relative;
+        }
+        .video-screen {
+            width: 100%;
+            height: 230px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .play-trigger-btn {
+            background-color: #ff9900;
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            font-size: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 10;
+        }
+        .actual-video {
+            width: 100%;
+            height: 100%;
+            display: none;
+            object-fit: contain;
+        }
+        
+        /* Inline Ad Overlay (Screen အတွင်းသာ) */
+        .inline-ad-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.96);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 15;
+        }
+        .ad-msg-box {
+            color: #ff9900;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .ad-skip-btn {
+            background-color: #ff9900;
+            color: #000;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* Details & Action Buttons */
+        .video-details {
+            padding: 12px;
+            border-bottom: 1px solid #222;
+        }
+        .video-main-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            margin: 0 0 8px 0;
+        }
+        .action-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            padding-bottom: 5px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            background-color: #1a1a1a;
+            color: #ff9900;
+            border: 1px solid #333;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Comments Section */
+        .comments-section {
+            padding: 15px;
+            background-color: #111;
+            border-bottom: 1px solid #222;
+        }
+        .comment-input-box {
+            width: 100%;
+            padding: 8px;
+            background-color: #222;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 8px;
+        }
+        .comment-list {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #bbb;
+        }
+        
         /* Download Ads Overlay Modal */
         .download-ad-overlay {
             position: fixed;
@@ -255,74 +295,141 @@
 </head>
 <body>
 
-    <div class="nav-bar">
-        <div class="logo-text">❌<span>VIDEOS</span></div>
-        <div style="font-size: 12px; color: #ff9900; font-weight: bold;">PREMIUM PLAYER</div>
-    </div>
+    <div id="homePage">
+        <div class="nav-bar">
+            <div class="logo-text">❌<span>VIDEOS</span></div>
+            <div style="font-size: 12px; color: #ff9900; font-weight: bold;">PREMIUM CLUB</div>
+        </div>
 
-    <div class="search-container">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search videos...">
-        <button class="search-btn" id="searchBtn">Search</button>
-    </div>
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search videos...">
+            <button class="search-btn" id="searchBtn">Search</button>
+        </div>
 
-    <div class="inline-ad">
-        <div class="inline-ad-title">🔥 CHATURBATE INLINE ADS</div>
-        <div class="inline-ad-text">SHE DOESN'T PLAY INNOCENT 😈</div>
-    </div>
+        <div class="inline-ad">
+            <div class="inline-ad-title">🔥 CHATURBATE INLINE ADS</div>
+            <div class="inline-ad-text">SHE DOESN'T PLAY INNOCENT 😈</div>
+        </div>
 
-    <div class="main-player-box">
-        <div class="video-screen">
-            <button class="play-trigger-btn" id="playBtn">▶</button>
-            <video class="actual-video" id="videoPlayer" controls>
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-            </video>
-            <div class="ad-countdown-overlay" id="adOverlay">
-                <div class="countdown-msg" id="adMsg">ကြော်ငြာ ၅ စက္ကန့် ကြည့်ရမည်... (<span id="timerBox">5</span>)</div>
-                <button class="skip-btn" id="skipAdBtn">SKIP AD & WATCH VIDEO</button>
+        <div class="home-title">FEATURED PREMIUM VIDEOS</div>
+        <div class="related-grid">
+            <div class="related-card" onclick="loadVideoPage('Beautiful Asian Private Show Mix Collection', '21 min', '1.2M views • 100% Rating')">
+                <div class="related-thumb">
+                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
+                    <div class="v-duration">21 min</div>
+                </div>
+                <div class="related-info">
+                    <div class="related-title">Beautiful Asian Private Show Mix Collection</div>
+                </div>
+                <div class="card-stats">
+                    <span>👁️ 1.2M views</span>
+                    <span>🔗 Share</span>
+                </div>
+            </div>
+            <div class="related-card" onclick="loadVideoPage('Top Model Exclusive Studio Photoshoot Behind', '15 min', '850K views • 98% Rating')">
+                <div class="related-thumb">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
+                    <div class="v-duration">15 min</div>
+                </div>
+                <div class="related-info">
+                    <div class="related-title">Top Model Exclusive Studio Photoshoot Behind</div>
+                </div>
+                <div class="card-stats">
+                    <span>👁️ 850K views</span>
+                    <span>🔗 Share</span>
+                </div>
+            </div>
+            <div class="related-card" onclick="loadVideoPage('Japanese Secret Room Club Exclusive v1', '32 min', '3.5M views • 99% Rating')">
+                <div class="related-thumb">
+                    <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=300">
+                    <div class="v-duration">32 min</div>
+                </div>
+                <div class="related-info">
+                    <div class="related-title">Japanese Secret Room Club Exclusive v1</div>
+                </div>
+                <div class="card-stats">
+                    <span>👁️ 3.5M views</span>
+                    <span>🔗 Share</span>
+                </div>
+            </div>
+            <div class="related-card" onclick="loadVideoPage('Private Model Dance Session Hot Collection', '18 min', '920K views • 100% Rating')">
+                <div class="related-thumb">
+                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300">
+                    <div class="v-duration">18 min</div>
+                </div>
+                <div class="related-info">
+                    <div class="related-title">Private Model Dance Session Hot Collection</div>
+                </div>
+                <div class="card-stats">
+                    <span>👁️ 920K views</span>
+                    <span>🔗 Share</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="video-details">
-        <h1 class="video-main-title" id="mainTitle">Premium Exclusive Studio Collection Movie (1080p)</h1>
-        <div style="font-size: 12px; color: #666;">10M Views • 100% Rating</div>
-        <div class="action-row">
-            <button class="action-btn" id="downloadBtn">📥 Download Video</button>
-            <button class="action-btn" id="watchLaterBtn">⭐ Watch Later</button>
+    <div class="player-page" id="playerPage">
+        <div class="back-home-row">
+            <button class="back-btn" id="backBtn">⬅ Back to Home</button>
         </div>
-    </div>
 
-    <div class="download-ad-overlay" id="downloadAdOverlay">
-        <div class="countdown-msg">ကျေးဇူးပြု၍ ကြော်ငြာ (5) စက္ကန့် စောင့်ပေးပါ... (<span id="dlTimerBox">5</span>)</div>
-        <button class="skip-btn" id="dlSkipAdBtn">SKIP AD & DOWNLOAD</button>
-    </div>
+        <div class="main-player-box">
+            <div class="video-screen">
+                <button class="play-trigger-btn" id="inlinePlayBtn">▶</button>
+                
+                <video class="actual-video" id="inlineVideo" controls>
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                </video>
 
-    <div class="comments-section">
-        <div style="font-weight: bold; font-size: 14px; color: #ff9900;">Comments</div>
-        <input type="text" class="comment-input-box" id="commentInput" placeholder="Write a comment and press Enter...">
-        <div class="comment-list" id="commentList">
-            <div><em>No comments yet. Be the first to comment!</em></div>
-        </div>
-    </div>
-
-    <div class="related-section-title">RELATED VIDEOS</div>
-    <div class="related-grid" id="relatedGrid">
-        <div class="related-card" onclick="loadVideo('Beautiful Asian Private Show Mix Collection', 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300')">
-            <div class="related-thumb">
-                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
-                <div class="v-duration">21 min</div>
-            </div>
-            <div class="related-info">
-                <div class="related-title">Beautiful Asian Private Show Mix Collection</div>
+                <div class="inline-ad-overlay" id="inlineAdOverlay">
+                    <div class="ad-msg-box">Sponsored Ad: Video will start in <span id="inlineAdSec">5</span>s...</div>
+                    <button class="ad-skip-btn" id="inlineSkipBtn">SKIP AD & PLAY</button>
+                </div>
             </div>
         </div>
-        <div class="related-card" onclick="loadVideo('Top Model Exclusive Studio Photoshoot Behind', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300')">
-            <div class="related-thumb">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
-                <div class="v-duration">15 min</div>
+
+        <div class="video-details">
+            <h1 class="video-main-title" id="mainTitle">Video Title Loading...</h1>
+            <div style="font-size: 12px; color: #666;" id="videoStats">Views & Rating</div>
+            <div class="action-row">
+                <button class="action-btn" id="downloadBtn">📥 Download Video</button>
+                <button class="action-btn" id="watchLaterBtn">⭐ Watch Later</button>
+                <button class="action-btn" id="favoriteBtn" style="color: #ff3333;">❤️ Favorite</button>
             </div>
-            <div class="related-info">
-                <div class="related-title">Top Model Exclusive Studio Photoshoot Behind</div>
+        </div>
+
+        <div class="download-ad-overlay" id="downloadAdOverlay">
+            <div class="countdown-msg">ကျေးဇူးပြု၍ ကြော်ငြာ (5) စက္ကန့် စောင့်ပေးပါ... (<span id="dlTimerBox">5</span>)</div>
+            <button class="skip-btn" id="dlSkipAdBtn">SKIP AD & DOWNLOAD</button>
+        </div>
+
+        <div class="comments-section">
+            <div style="font-weight: bold; font-size: 14px; color: #ff9900;">Comments</div>
+            <input type="text" class="comment-input-box" id="commentInput" placeholder="Write a comment and press Enter...">
+            <div class="comment-list" id="commentList">
+                <div><em>No comments yet. Be the first to comment!</em></div>
+            </div>
+        </div>
+
+        <div class="home-title" style="border-left: 3px solid #ff4500; background: #111;">SIMILAR VIDEOS</div>
+        <div class="related-grid" style="background: #000;">
+            <div class="related-card" onclick="loadVideoPage('Beautiful Asian Private Show Mix Collection', '21 min', '1.2M views')">
+                <div class="related-thumb">
+                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
+                    <div class="v-duration">21 min</div>
+                </div>
+                <div class="related-info">
+                    <div class="related-title">Beautiful Asian Private Show Mix Collection</div>
+                </div>
+            </div>
+            <div class="related-card" onclick="loadVideoPage('Top Model Exclusive Studio Photoshoot Behind', '15 min', '850K views')">
+                <div class="related-thumb">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
+                    <div class="v-duration">15 min</div>
+                </div>
+                <div class="related-info">
+                    <div class="related-title">Top Model Exclusive Studio Photoshoot Behind</div>
+                </div>
             </div>
         </div>
     </div>
@@ -331,36 +438,63 @@
         window.Telegram.WebApp.ready();
         window.Telegram.WebApp.expand();
 
-        const playBtn = document.getElementById('playBtn');
-        const adOverlay = document.getElementById('adOverlay');
-        const timerBox = document.getElementById('timerBox');
-        const skipAdBtn = document.getElementById('skipAdBtn');
-        const videoPlayer = document.getElementById('videoPlayer');
-        const adMsg = document.getElementById('adMsg');
+        const homePage = document.getElementById('homePage');
+        const playerPage = document.getElementById('playerPage');
+        
+        const inlinePlayBtn = document.getElementById('inlinePlayBtn');
+        const inlineVideo = document.getElementById('inlineVideo');
+        const inlineAdOverlay = document.getElementById('inlineAdOverlay');
+        const inlineAdSec = document.getElementById('inlineAdSec');
+        const inlineSkipBtn = document.getElementById('inlineSkipBtn');
 
-        // Play button and countdown logic
-        playBtn.addEventListener('click', () => {
-            playBtn.style.display = 'none';
-            adOverlay.style.display = 'flex';
+        // Related card click opens Player Page
+        function loadVideoPage(title, duration, stats) {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            homePage.style.display = 'none';
+            playerPage.style.display = 'block';
+
+            // Update Video details on Player Page
+            document.getElementById('mainTitle').innerText = title;
+            document.getElementById('videoStats').innerText = stats;
             
-            let timeRemaining = 5;
-            timerBox.innerText = timeRemaining;
+            // Reset Inline Player (Screen အတွင်း ဗီဒီယိုအခြေအနေကို မူလအတိုင်း ပြန်ချထားခြင်း)
+            inlineVideo.style.display = 'none';
+            inlineVideo.pause();
+            inlineVideo.currentTime = 0;
+            inlineAdOverlay.style.display = 'none';
+            inlineSkipBtn.style.display = 'none';
+            inlinePlayBtn.style.display = 'block';
+        }
 
-            const counter = setInterval(() => {
-                timeRemaining--;
-                timerBox.innerText = timeRemaining;
-                if(timeRemaining <= 0) {
-                    clearInterval(counter);
-                    adMsg.style.display = 'none';
-                    skipAdBtn.style.display = 'block';
+        // Back to Home Page button
+        document.getElementById('backBtn').addEventListener('click', () => {
+            playerPage.style.display = 'none';
+            homePage.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        });
+
+        // Inline Ad & Countdown inside the video screen (Screen တစ်ခုလုံးမဖုံးဘဲ ဗီဒီယိုအကွက်ထဲတွင်သာ 5sec countdown ပြေးခြင်း)
+        inlinePlayBtn.addEventListener('click', () => {
+            inlinePlayBtn.style.display = 'none';
+            inlineAdOverlay.style.display = 'flex';
+            
+            let countdown = 5;
+            inlineAdSec.innerText = countdown;
+
+            const adTimer = setInterval(() => {
+                countdown--;
+                inlineAdSec.innerText = countdown;
+                if(countdown <= 0) {
+                    clearInterval(adTimer);
+                    inlineSkipBtn.style.display = 'block';
                 }
             }, 1000);
         });
 
-        skipAdBtn.addEventListener('click', () => {
-            adOverlay.style.display = 'none';
-            videoPlayer.style.display = 'block';
-            videoPlayer.play();
+        inlineSkipBtn.addEventListener('click', () => {
+            inlineAdOverlay.style.display = 'none';
+            inlineVideo.style.display = 'block';
+            inlineVideo.play();
         });
 
         // Download feature with 5s Ad Countdown
@@ -388,7 +522,6 @@
 
         dlSkipAdBtn.addEventListener('click', () => {
             downloadAdOverlay.style.display = 'none';
-            // တကယ့် ဒေါင်းလုဒ်လင့်ခ် (သို့) ဖိုင်လင့်ခ်အစစ်ဆီသို့ လမ်းညွှန်ပေးခြင်း
             window.location.href = 'https://www.w3schools.com/html/mov_bbb.mp4'; 
         });
 
@@ -403,6 +536,11 @@
         // Watch later feature
         document.getElementById('watchLaterBtn').addEventListener('click', () => {
             alert('Added to Watch Later list!');
+        });
+
+        // ❤️ Favorite feature (အသစ်ထည့်ထားသော ခလုတ်)
+        document.getElementById('favoriteBtn').addEventListener('click', () => {
+            alert('Added to your Favorite collection ❤️!');
         });
 
         // Comments feature
@@ -420,19 +558,6 @@
                 alert('Comment posted!');
             }
         });
-
-        // Related Video Click Action
-        function loadVideo(title, thumbUrl) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            document.getElementById('mainTitle').innerText = title;
-            
-            videoPlayer.style.display = 'none';
-            videoPlayer.pause();
-            videoPlayer.currentTime = 0;
-            skipAdBtn.style.display = 'none';
-            adMsg.style.display = 'block';
-            playBtn.style.display = 'block';
-        }
     </script>
 </body>
 </html>
