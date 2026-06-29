@@ -46,6 +46,7 @@
         .play-trigger-btn { background-color: #ff9900; color: #000; border: none; border-radius: 50%; width: 65px; height: 65px; font-size: 28px; cursor: pointer; font-weight: bold; z-index: 10; }
         .actual-video { width: 100%; height: 100%; display: none; object-fit: contain; }
         
+        /* ဗီဒီယို အကွက်အတွင်း Ad 5sec ပြေးသောစနစ် */
         .inline-ad-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 15; }
         .ad-msg-box { color: #ff9900; font-size: 15px; font-weight: bold; text-align: center; margin-bottom: 12px; }
         .ad-skip-btn { background-color: #ff9900; color: #000; padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; cursor: pointer; display: none; }
@@ -59,7 +60,7 @@
         .comment-input-box { width: 100%; padding: 10px; background-color: #222; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
         .comment-list { margin-top: 12px; font-size: 13px; color: #ccc; }
         
-        /* ပြင်ဆင်ထားသော Download Ad Overlay (ဘယ်မှမလွင့်ထွက်တော့ဘဲ ဖုန်းထဲသို့ အလိုအလျောက် Download ဆွဲပေးမည့်စနစ်) */
+        /* Download Ad Overlay (Screen တစ်ခုလုံးဖုံးကာ ဒေါင်းလုဒ်အတွက် 5sec စောင့်ပေးရမည့်စနစ်) */
         .download-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .countdown-msg { color: #ff9900; font-size: 18px; font-weight: bold; margin-bottom: 10px; text-align: center; }
         .skip-btn { background-color: #ff9900; color: #000; padding: 10px 24px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: none; }
@@ -97,14 +98,14 @@
                         <span class="share-btn-text" onclick="event.stopPropagation(); alert('Link copied to clipboard!');">🔗 Share</span>
                     </div>
                 </div>
-                <div class="related-card" onclick="loadVideoPage('Top Model Exclusive Studio Photoshoot Behind')">
+                <div class="related-card" onclick="loadVideoPage('Premium Exclusive Studio Collection Movie (1080p)')">
                     <div class="related-thumb">
                         <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
                         <div class="v-duration">15 min</div>
                     </div>
-                    <div class="related-info"><div class="related-title">Top Model Exclusive Studio Photoshoot Behind</div></div>
+                    <div class="related-info"><div class="related-title">Premium Exclusive Studio Collection Movie (1080p)</div></div>
                     <div class="card-stats">
-                        <span>👁️ 850K Views</span>
+                        <span>👁️ 10M Views</span>
                         <span class="share-btn-text" onclick="event.stopPropagation(); alert('Link copied to clipboard!');">🔗 Share</span>
                     </div>
                 </div>
@@ -128,7 +129,7 @@
             <div class="video-details">
                 <h1 class="video-main-title" id="mainTitle">Video Title</h1>
                 <div class="action-row">
-                    <button class="action-btn" id="downloadBtn">📥 Download</button>
+                    <button class="action-btn" id="downloadBtn">📥 Download Video</button>
                     <button class="action-btn" id="favoriteBtn">❤️ Favorite</button>
                 </div>
             </div>
@@ -150,12 +151,12 @@
                     </div>
                     <div class="related-info"><div class="related-title">Beautiful Asian Private Show Mix Collection</div></div>
                 </div>
-                <div class="related-card" onclick="loadVideoPage('Top Model Exclusive Studio Photoshoot Behind')">
+                <div class="related-card" onclick="loadVideoPage('Premium Exclusive Studio Collection Movie (1080p)')">
                     <div class="related-thumb">
                         <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
                         <div class="v-duration">15 min</div>
                     </div>
-                    <div class="related-info"><div class="related-title">Top Model Exclusive Studio Photoshoot Behind</div></div>
+                    <div class="related-info"><div class="related-title">Premium Exclusive Studio Collection Movie (1080p)</div></div>
                 </div>
             </div>
         </div>
@@ -185,7 +186,7 @@
             inlineVideo.style.display = 'none';
             inlineVideo.pause();
             inlineVideo.currentTime = 0;
-            document.getElementById('AdOverlayBox').style.display = 'none';
+            document.getElementById('inlineAdOverlayBox').style.display = 'none';
             document.getElementById('SkipBtnBox').style.display = 'none';
             document.getElementById('inlinePlayBtn').style.display = 'block';
             
@@ -198,9 +199,10 @@
             window.scrollTo(0,0);
         };
 
+        // ဗီဒီယို အကွက်အတွင်း Ad 5sec countdown ပြေးခြင်း
         document.getElementById('inlinePlayBtn').onclick = () => {
             document.getElementById('inlinePlayBtn').style.display = 'none';
-            document.getElementById('AdOverlayBox').style.display = 'flex';
+            document.getElementById('inlineAdOverlayBox').style.display = 'flex';
             let sec = 5;
             document.getElementById('AdSecBox').innerText = sec;
             
@@ -215,12 +217,12 @@
         };
 
         document.getElementById('SkipBtnBox').onclick = () => {
-            document.getElementById('AdOverlayBox').style.display = 'none';
+            document.getElementById('inlineAdOverlayBox').style.display = 'none';
             inlineVideo.style.display = 'block';
             inlineVideo.play();
         };
 
-        // Download အလိုအလျောက်စတင်မည့်စနစ် (ဖုန်းထဲသို့ တိုက်ရိုက်ဆွဲချခြင်း)
+        // Download နှိပ်လျှင် Ad 5s စောင့်ပြီး ဖုန်းထဲသို့ ဒေါင်းလုဒ်ကျလာမည့်စနစ်
         const downloadBtn = document.getElementById('downloadBtn');
         const downloadAdOverlay = document.getElementById('downloadAdOverlay');
         const dlTimerBox = document.getElementById('dlTimerBox');
@@ -245,7 +247,7 @@
 
         dlSkipAdBtn.onclick = () => {
             downloadAdOverlay.style.display = 'none';
-            // အလိုအလျောက် ဒေါင်းလုဒ်ဆွဲခြင်း အမိန့်ပေးခြင်း
+            // ဖုန်းထဲသို့ အလိုအလျောက် ဒေါင်းလုဒ်ဆွဲခြင်း အမိန့်ပေးခြင်း
             hiddenDownloadLink.click(); 
         };
 
