@@ -19,7 +19,7 @@
         .logo-text { color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; }
         .logo-text span { color: #ff9900; }
         
-        /* Local Mini App Menu Tab */
+        /* Local Mini App Menu Tab (TG Login လုံးဝမပါဝင်တော့ပါ) */
         .user-menu { background-color: #111; display: flex; justify-content: space-around; padding: 8px 0; border-bottom: 1px solid #333; }
         .menu-tab { color: #aaa; font-size: 14px; font-weight: bold; cursor: pointer; padding: 6px 16px; border-radius: 4px; }
         .menu-tab.active { color: #000; background-color: #ff9900; }
@@ -70,17 +70,15 @@
         .comment-input-box { width: 100%; padding: 10px; background-color: #222; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
         .comment-list { margin-top: 12px; font-size: 13px; color: #ccc; }
         
-        /* လုံးဝ သန့်ရှင်းသော Download Page (ဗီဒီယို လုံးဝမပါ၊ ဒေါင်းလုဒ်သီးသန့် Screen) */
+        /* သန့်ရှင်းသော Download Page (ဗီဒီယို လုံးဝမပါဝင်ပါ) */
         .download-page-box { padding: 20px; text-align: center; background-color: #111; margin: 15px; border-radius: 6px; border: 1px solid #333; }
         .download-title { color: #ff9900; font-size: 18px; font-weight: bold; margin-bottom: 15px; }
         
-        /* အလိုအလျောက် 5 စက္ကန့် ቆጠራပြေးမည့် ကြော်ငြာစနစ် (ပုံစံအသစ်) */
         .download-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .countdown-msg { color: #ff9900; font-size: 18px; font-weight: bold; margin-bottom: 16px; text-align: center; line-height: 1.5; }
         .skip-btn { background-color: #ff9900; color: #000; padding: 12px 28px; border: none; border-radius: 4px; font-weight: bold; font-size: 15px; cursor: pointer; display: none; }
         .start-dl-btn { background-color: #ff9900; color: #000; padding: 14px 28px; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; width: 100%; max-width: 250px; }
         
-        /* Inline Ads Style for Download Page */
         .dl-inline-ad { background-color: #1a1a1a; border: 1px solid #333; padding: 10px; margin-bottom: 15px; border-radius: 4px; font-size: 12px; color: #ff9900; text-align: center; }
     </style>
 </head>
@@ -273,7 +271,6 @@
             
             document.getElementById('commentList').innerHTML = '<div><em>No comments yet. Be the first to comment!</em></div>';
             
-            // update favorite button UI
             updateFavBtnUI();
         }
 
@@ -334,7 +331,6 @@
 
         dlSkipAdBtn.onclick = () => {
             downloadAdOverlay.style.display = 'none';
-            // ဖုန်းထဲသို့ အလိုအလျောက် ဒေါင်းလုဒ်ဆွဲခြင်း အမိန့်ပေးခြင်း
             hiddenDownloadLink.click(); 
         };
 
@@ -381,11 +377,9 @@
             let index = favs.indexOf(currentVideoTitle);
             
             if (index > -1) {
-                // ဖယ်ထုတ်သည်
                 favs.splice(index, 1);
                 alert('Removed from Favorites!');
             } else {
-                // ထည့်သည်
                 favs.push(currentVideoTitle);
                 alert('Added to Favorites!');
             }
