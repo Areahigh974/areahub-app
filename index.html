@@ -236,6 +236,21 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
+
+        /* Download Ads Overlay Modal */
+        .download-ad-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.98);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -275,6 +290,11 @@
             <button class="action-btn" id="downloadBtn">📥 Download Video</button>
             <button class="action-btn" id="watchLaterBtn">⭐ Watch Later</button>
         </div>
+    </div>
+
+    <div class="download-ad-overlay" id="downloadAdOverlay">
+        <div class="countdown-msg">ကျေးဇူးပြု၍ ကြော်ငြာ (5) စက္ကန့် စောင့်ပေးပါ... (<span id="dlTimerBox">5</span>)</div>
+        <button class="skip-btn" id="dlSkipAdBtn">SKIP AD & DOWNLOAD</button>
     </div>
 
     <div class="comments-section">
@@ -343,17 +363,41 @@
             videoPlayer.play();
         });
 
+        // Download feature with 5s Ad Countdown
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadAdOverlay = document.getElementById('downloadAdOverlay');
+        const dlTimerBox = document.getElementById('dlTimerBox');
+        const dlSkipAdBtn = document.getElementById('dlSkipAdBtn');
+
+        downloadBtn.addEventListener('click', () => {
+            downloadAdOverlay.style.display = 'flex';
+            dlSkipAdBtn.style.display = 'none';
+            
+            let dlTime = 5;
+            dlTimerBox.innerText = dlTime;
+
+            const dlCounter = setInterval(() => {
+                dlTime--;
+                dlTimerBox.innerText = dlTime;
+                if(dlTime <= 0) {
+                    clearInterval(dlCounter);
+                    dlSkipAdBtn.style.display = 'block';
+                }
+            }, 1000);
+        });
+
+        dlSkipAdBtn.addEventListener('click', () => {
+            downloadAdOverlay.style.display = 'none';
+            // တကယ့် ဒေါင်းလုဒ်လင့်ခ် (သို့) ဖိုင်လင့်ခ်အစစ်ဆီသို့ လမ်းညွှန်ပေးခြင်း
+            window.location.href = 'https://www.w3schools.com/html/mov_bbb.mp4'; 
+        });
+
         // Search feature
         document.getElementById('searchBtn').addEventListener('click', () => {
             const query = document.getElementById('searchInput').value;
             if (query) {
                 alert('Searching for: ' + query);
             }
-        });
-
-        // Download feature
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-            alert('Video download started successfully!');
         });
 
         // Watch later feature
@@ -379,13 +423,9 @@
 
         // Related Video Click Action
         function loadVideo(title, thumbUrl) {
-            // Scroll to top smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Update title
             document.getElementById('mainTitle').innerText = title;
             
-            // Reset Player
             videoPlayer.style.display = 'none';
             videoPlayer.pause();
             videoPlayer.currentTime = 0;
