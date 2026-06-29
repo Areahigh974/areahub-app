@@ -13,7 +13,6 @@
             margin: 0;
             padding: 0;
         }
-        /* Top Navigation Bar */
         .nav-bar {
             background-color: #1a1a1a;
             padding: 10px 15px;
@@ -30,8 +29,29 @@
         .logo-text span {
             color: #ff9900;
         }
-        
-        /* Inline Ads Section */
+        .search-container {
+            padding: 10px 15px;
+            background-color: #111;
+            display: flex;
+            gap: 8px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px;
+            background-color: #222;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .search-btn {
+            background-color: #ff9900;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
         .inline-ad {
             background-color: #222;
             margin: 10px;
@@ -50,8 +70,6 @@
             color: #ddd;
             font-size: 14px;
         }
-
-        /* Main Video Player Area */
         .main-player-box {
             width: 100%;
             background-color: #111;
@@ -78,8 +96,6 @@
             font-weight: bold;
             z-index: 5;
         }
-        
-        /* 5s Ads Overlay */
         .ad-countdown-overlay {
             position: absolute;
             top: 0;
@@ -116,10 +132,9 @@
             height: 100%;
             display: none;
         }
-
-        /* Video Details & Action Buttons */
         .video-details {
             padding: 12px;
+            border-bottom: 1px solid #222;
         }
         .video-main-title {
             font-size: 16px;
@@ -130,9 +145,8 @@
         .action-row {
             display: flex;
             gap: 15px;
-            margin-top: 10px;
-            border-bottom: 1px solid #222;
-            padding-bottom: 15px;
+            margin-top: 12px;
+            padding-bottom: 5px;
         }
         .action-btn {
             background-color: #1a1a1a;
@@ -147,10 +161,28 @@
             align-items: center;
             gap: 5px;
         }
-
-        /* Related Videos Section */
+        .comments-section {
+            padding: 15px;
+            background-color: #111;
+            border-bottom: 1px solid #222;
+        }
+        .comment-input-box {
+            width: 100%;
+            padding: 8px;
+            background-color: #222;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 8px;
+        }
+        .comment-list {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #bbb;
+        }
         .related-section-title {
-            padding: 10px 12px;
+            padding: 12px;
             font-size: 15px;
             font-weight: bold;
             color: #ff9900;
@@ -168,6 +200,7 @@
             border-radius: 4px;
             overflow: hidden;
             border: 1px solid #222;
+            cursor: pointer;
         }
         .related-thumb {
             width: 100%;
@@ -212,6 +245,11 @@
         <div style="font-size: 12px; color: #ff9900; font-weight: bold;">PREMIUM PLAYER</div>
     </div>
 
+    <div class="search-container">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search videos...">
+        <button class="search-btn" id="searchBtn">Search</button>
+    </div>
+
     <div class="inline-ad">
         <div class="inline-ad-title">🔥 CHATURBATE INLINE ADS</div>
         <div class="inline-ad-text">SHE DOESN'T PLAY INNOCENT 😈</div>
@@ -220,11 +258,9 @@
     <div class="main-player-box">
         <div class="video-screen">
             <button class="play-trigger-btn" id="playBtn">▶</button>
-
             <video class="actual-video" id="videoPlayer" controls>
                 <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
             </video>
-
             <div class="ad-countdown-overlay" id="adOverlay">
                 <div class="countdown-msg" id="adMsg">ကြော်ငြာ ၅ စက္ကန့် ကြည့်ရမည်... (<span id="timerBox">5</span>)</div>
                 <button class="skip-btn" id="skipAdBtn">SKIP AD & WATCH VIDEO</button>
@@ -233,18 +269,25 @@
     </div>
 
     <div class="video-details">
-        <h1 class="video-main-title">Premium Exclusive Studio Collection Movie (1080p)</h1>
+        <h1 class="video-main-title" id="mainTitle">Premium Exclusive Studio Collection Movie (1080p)</h1>
         <div style="font-size: 12px; color: #666;">10M Views • 100% Rating</div>
-        
         <div class="action-row">
-            <button class="action-btn" onclick="alert('Downloading started...')">📥 Download Video</button>
-            <button class="action-btn" onclick="alert('Added to Watchlist')">⭐ Watch Later</button>
+            <button class="action-btn" id="downloadBtn">📥 Download Video</button>
+            <button class="action-btn" id="watchLaterBtn">⭐ Watch Later</button>
+        </div>
+    </div>
+
+    <div class="comments-section">
+        <div style="font-weight: bold; font-size: 14px; color: #ff9900;">Comments</div>
+        <input type="text" class="comment-input-box" id="commentInput" placeholder="Write a comment and press Enter...">
+        <div class="comment-list" id="commentList">
+            <div><em>No comments yet. Be the first to comment!</em></div>
         </div>
     </div>
 
     <div class="related-section-title">RELATED VIDEOS</div>
-    <div class="related-grid">
-        <div class="related-card" onclick="alert('Loading this video...')">
+    <div class="related-grid" id="relatedGrid">
+        <div class="related-card" onclick="loadVideo('Beautiful Asian Private Show Mix Collection', 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300')">
             <div class="related-thumb">
                 <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
                 <div class="v-duration">21 min</div>
@@ -253,7 +296,7 @@
                 <div class="related-title">Beautiful Asian Private Show Mix Collection</div>
             </div>
         </div>
-        <div class="related-card" onclick="alert('Loading this video...')">
+        <div class="related-card" onclick="loadVideo('Top Model Exclusive Studio Photoshoot Behind', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300')">
             <div class="related-thumb">
                 <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
                 <div class="v-duration">15 min</div>
@@ -265,7 +308,6 @@
     </div>
 
     <script>
-        // Telegram WebApp Setup
         window.Telegram.WebApp.ready();
         window.Telegram.WebApp.expand();
 
@@ -276,9 +318,10 @@
         const videoPlayer = document.getElementById('videoPlayer');
         const adMsg = document.getElementById('adMsg');
 
+        // Play button and countdown logic
         playBtn.addEventListener('click', () => {
             playBtn.style.display = 'none';
-            adOverlay.style.display = 'flex'; // Show Countdown Ads
+            adOverlay.style.display = 'flex';
             
             let timeRemaining = 5;
             timerBox.innerText = timeRemaining;
@@ -289,7 +332,7 @@
                 if(timeRemaining <= 0) {
                     clearInterval(counter);
                     adMsg.style.display = 'none';
-                    skipAdBtn.style.display = 'block'; // Show Skip button
+                    skipAdBtn.style.display = 'block';
                 }
             }, 1000);
         });
@@ -297,8 +340,59 @@
         skipAdBtn.addEventListener('click', () => {
             adOverlay.style.display = 'none';
             videoPlayer.style.display = 'block';
-            videoPlayer.play(); // Auto Play Main Video
+            videoPlayer.play();
         });
+
+        // Search feature
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                alert('Searching for: ' + query);
+            }
+        });
+
+        // Download feature
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            alert('Video download started successfully!');
+        });
+
+        // Watch later feature
+        document.getElementById('watchLaterBtn').addEventListener('click', () => {
+            alert('Added to Watch Later list!');
+        });
+
+        // Comments feature
+        document.getElementById('commentInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                const commentList = document.getElementById('commentList');
+                if (commentList.innerHTML.includes('No comments yet')) {
+                    commentList.innerHTML = '';
+                }
+                const newComment = document.createElement('div');
+                newComment.style.marginBottom = '6px';
+                newComment.innerHTML = `<strong>User:</strong> ${this.value}`;
+                commentList.appendChild(newComment);
+                this.value = '';
+                alert('Comment posted!');
+            }
+        });
+
+        // Related Video Click Action
+        function loadVideo(title, thumbUrl) {
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Update title
+            document.getElementById('mainTitle').innerText = title;
+            
+            // Reset Player
+            videoPlayer.style.display = 'none';
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0;
+            skipAdBtn.style.display = 'none';
+            adMsg.style.display = 'block';
+            playBtn.style.display = 'block';
+        }
     </script>
 </body>
 </html>
