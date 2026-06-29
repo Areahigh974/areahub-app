@@ -8,7 +8,6 @@
     <style>
         body { background-color: #000000; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
         
-        /* Fixed Header (Search ဘား အမြဲပေါ်နေရန်) */
         .fixed-header {
             position: sticky;
             top: 0;
@@ -22,13 +21,11 @@
         .search-input { flex: 1; padding: 8px; background-color: #222; border: 1px solid #333; color: #fff; border-radius: 4px; }
         .search-btn { background-color: #ff9900; color: #000; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; }
         
-        /* Page Content */
         .page-content { padding-top: 5px; }
         .inline-ad { background-color: #222; margin: 10px; padding: 12px; border-radius: 4px; border: 1px dashed #ff9900; text-align: center; }
         .inline-ad-title { color: #ff4500; font-size: 13px; font-weight: bold; margin-bottom: 4px; }
         .inline-ad-text { color: #ddd; font-size: 14px; }
 
-        /* Related Videos Grid System (Related Vds များ အစီအရီပေါ်ရန်) */
         .home-title { padding: 12px; font-size: 15px; font-weight: bold; color: #ff9900; background-color: #0d0d0d; border-left: 3px solid #ff9900; }
         .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 12px; }
         .related-card { background-color: #111; border-radius: 4px; overflow: hidden; border: 1px solid #222; cursor: pointer; }
@@ -40,7 +37,6 @@
         .card-stats { display: flex; justify-content: space-between; padding: 0 6px 6px 6px; font-size: 11px; color: #888; }
         .share-btn-text { color: #ff9900; font-weight: bold; }
 
-        /* Video Player Page */
         .player-page { display: none; }
         .back-home-row { padding: 10px 15px; background: #111; }
         .back-btn { background: none; border: none; color: #ff9900; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; }
@@ -50,7 +46,6 @@
         .play-trigger-btn { background-color: #ff9900; color: #000; border: none; border-radius: 50%; width: 65px; height: 65px; font-size: 28px; cursor: pointer; font-weight: bold; z-index: 10; }
         .actual-video { width: 100%; height: 100%; display: none; object-fit: contain; }
         
-        /* Inline Ad Overlay (ဗီဒီယိုအကွက်အတွင်း Ad 5sec ပြေးခြင်း) */
         .inline-ad-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 15; }
         .ad-msg-box { color: #ff9900; font-size: 15px; font-weight: bold; text-align: center; margin-bottom: 12px; }
         .ad-skip-btn { background-color: #ff9900; color: #000; padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; cursor: pointer; display: none; }
@@ -60,12 +55,11 @@
         .action-row { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
         .action-btn { background-color: #1a1a1a; color: #ff9900; border: 1px solid #333; padding: 8px 14px; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; }
         
-        /* Comments Section (Player အောက်နားတွင် ကပ်လျက်ထားရှိခြင်း) */
         .comments-section { padding: 15px; background-color: #1a1a1a; border-top: 1px solid #333; }
         .comment-input-box { width: 100%; padding: 10px; background-color: #222; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
         .comment-list { margin-top: 12px; font-size: 13px; color: #ccc; }
         
-        /* Download Ads Overlay Modal */
+        /* ပြင်ဆင်ထားသော Download Ad Overlay (ဘယ်မှမလွင့်ထွက်တော့ဘဲ ဖုန်းထဲသို့ အလိုအလျောက် Download ဆွဲပေးမည့်စနစ်) */
         .download-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .countdown-msg { color: #ff9900; font-size: 18px; font-weight: bold; margin-bottom: 10px; text-align: center; }
         .skip-btn { background-color: #ff9900; color: #000; padding: 10px 24px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: none; }
@@ -92,7 +86,7 @@
             </div>
             <div class="home-title">FEATURED PREMIUM VIDEOS</div>
             <div class="related-grid" id="homeGrid">
-                <div class="related-card" onclick="loadVideoPage('Beautiful Asian Private Show Mix Collection', '👁️ 1.2M Views')">
+                <div class="related-card" onclick="loadVideoPage('Beautiful Asian Private Show Mix Collection')">
                     <div class="related-thumb">
                         <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
                         <div class="v-duration">21 min</div>
@@ -103,7 +97,7 @@
                         <span class="share-btn-text" onclick="event.stopPropagation(); alert('Link copied to clipboard!');">🔗 Share</span>
                     </div>
                 </div>
-                <div class="related-card" onclick="loadVideoPage('Top Model Exclusive Studio Photoshoot Behind', '👁️ 850K Views')">
+                <div class="related-card" onclick="loadVideoPage('Top Model Exclusive Studio Photoshoot Behind')">
                     <div class="related-thumb">
                         <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
                         <div class="v-duration">15 min</div>
@@ -111,28 +105,6 @@
                     <div class="related-info"><div class="related-title">Top Model Exclusive Studio Photoshoot Behind</div></div>
                     <div class="card-stats">
                         <span>👁️ 850K Views</span>
-                        <span class="share-btn-text" onclick="event.stopPropagation(); alert('Link copied to clipboard!');">🔗 Share</span>
-                    </div>
-                </div>
-                <div class="related-card" onclick="loadVideoPage('Japanese Secret Room Club Exclusive v1', '👁️ 3.5M Views')">
-                    <div class="related-thumb">
-                        <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=300">
-                        <div class="v-duration">32 min</div>
-                    </div>
-                    <div class="related-info"><div class="related-title">Japanese Secret Room Club Exclusive v1</div></div>
-                    <div class="card-stats">
-                        <span>👁️ 3.5M Views</span>
-                        <span class="share-btn-text" onclick="event.stopPropagation(); alert('Link copied to clipboard!');">🔗 Share</span>
-                    </div>
-                </div>
-                <div class="related-card" onclick="loadVideoPage('Private Model Dance Session Hot Collection', '👁️ 920K Views')">
-                    <div class="related-thumb">
-                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300">
-                        <div class="v-duration">18 min</div>
-                    </div>
-                    <div class="related-info"><div class="related-title">Private Model Dance Session Hot Collection</div></div>
-                    <div class="card-stats">
-                        <span>👁️ 920K Views</span>
                         <span class="share-btn-text" onclick="event.stopPropagation(); alert('Link copied to clipboard!');">🔗 Share</span>
                     </div>
                 </div>
@@ -146,9 +118,9 @@
                 <div class="video-screen">
                     <button class="play-trigger-btn" id="inlinePlayBtn">▶</button>
                     <video class="actual-video" id="inlineVideo" controls><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
-                    <div class="inline-ad-overlay" id="inlineAdOverlay">
-                        <div class="ad-msg-box">Sponsored Ad: Video will start in <span id="inlineAdSec">5</span>s...</div>
-                        <button class="ad-skip-btn" id="inlineSkipBtn">SKIP AD & PLAY</button>
+                    <div class="inline-ad-overlay" id="inlineAdOverlayBox">
+                        <div class="ad-msg-box">Sponsored Ad: Video will start in <span id="AdSecBox">5</span>s...</div>
+                        <button class="ad-skip-btn" id="SkipBtnBox">SKIP AD & PLAY</button>
                     </div>
                 </div>
             </div>
@@ -171,14 +143,14 @@
 
             <div class="home-title" style="border-left: 3px solid #ff4500; background: #111;">SIMILAR VIDEOS</div>
             <div class="related-grid" style="background: #000;">
-                <div class="related-card" onclick="loadVideoPage('Beautiful Asian Private Show Mix Collection', '👁️ 1.2M Views')">
+                <div class="related-card" onclick="loadVideoPage('Beautiful Asian Private Show Mix Collection')">
                     <div class="related-thumb">
                         <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
                         <div class="v-duration">21 min</div>
                     </div>
                     <div class="related-info"><div class="related-title">Beautiful Asian Private Show Mix Collection</div></div>
                 </div>
-                <div class="related-card" onclick="loadVideoPage('Top Model Exclusive Studio Photoshoot Behind', '👁️ 850K Views')">
+                <div class="related-card" onclick="loadVideoPage('Top Model Exclusive Studio Photoshoot Behind')">
                     <div class="related-thumb">
                         <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
                         <div class="v-duration">15 min</div>
@@ -194,6 +166,8 @@
         <button class="skip-btn" id="dlSkipAdBtn">SKIP AD & DOWNLOAD</button>
     </div>
 
+    <a id="hiddenDownloadLink" href="https://www.w3schools.com/html/mov_bbb.mp4" download="Premium_Video.mp4" style="display: none;"></a>
+
     <script>
         window.Telegram.WebApp.ready();
         window.Telegram.WebApp.expand();
@@ -208,15 +182,13 @@
             playerPage.style.display = 'block';
             window.scrollTo(0,0);
             
-            // Reset Inline Player
             inlineVideo.style.display = 'none';
             inlineVideo.pause();
             inlineVideo.currentTime = 0;
-            document.getElementById('inlineAdOverlay').style.display = 'none';
-            document.getElementById('inlineSkipBtn').style.display = 'none';
+            document.getElementById('AdOverlayBox').style.display = 'none';
+            document.getElementById('SkipBtnBox').style.display = 'none';
             document.getElementById('inlinePlayBtn').style.display = 'block';
             
-            // Reset Comments list
             document.getElementById('commentList').innerHTML = '<div><em>No comments yet. Be the first to comment!</em></div>';
         }
 
@@ -226,34 +198,34 @@
             window.scrollTo(0,0);
         };
 
-        // Inline Ad Logic (Screen အတွင်း ဗီဒီယိုအကွက်ထဲတွင်သာ Ad ပြေးခြင်း)
         document.getElementById('inlinePlayBtn').onclick = () => {
             document.getElementById('inlinePlayBtn').style.display = 'none';
-            document.getElementById('inlineAdOverlay').style.display = 'flex';
+            document.getElementById('AdOverlayBox').style.display = 'flex';
             let sec = 5;
-            document.getElementById('inlineAdSec').innerText = sec;
+            document.getElementById('AdSecBox').innerText = sec;
             
             let timer = setInterval(()=>{
                 sec--;
-                document.getElementById('inlineAdSec').innerText = sec;
+                document.getElementById('AdSecBox').innerText = sec;
                 if(sec <= 0) { 
                     clearInterval(timer); 
-                    document.getElementById('inlineSkipBtn').style.display = 'block'; 
+                    document.getElementById('SkipBtnBox').style.display = 'block'; 
                 }
             }, 1000);
         };
 
-        document.getElementById('inlineSkipBtn').onclick = () => {
-            document.getElementById('inlineAdOverlay').style.display = 'none';
+        document.getElementById('SkipBtnBox').onclick = () => {
+            document.getElementById('AdOverlayBox').style.display = 'none';
             inlineVideo.style.display = 'block';
             inlineVideo.play();
         };
 
-        // Download feature with 5s Ad Countdown
+        // Download အလိုအလျောက်စတင်မည့်စနစ် (ဖုန်းထဲသို့ တိုက်ရိုက်ဆွဲချခြင်း)
         const downloadBtn = document.getElementById('downloadBtn');
         const downloadAdOverlay = document.getElementById('downloadAdOverlay');
         const dlTimerBox = document.getElementById('dlTimerBox');
         const dlSkipAdBtn = document.getElementById('dlSkipAdBtn');
+        const hiddenDownloadLink = document.getElementById('hiddenDownloadLink');
 
         downloadBtn.onclick = () => {
             downloadAdOverlay.style.display = 'flex';
@@ -273,10 +245,10 @@
 
         dlSkipAdBtn.onclick = () => {
             downloadAdOverlay.style.display = 'none';
-            window.location.href = 'https://www.w3schools.com/html/mov_bbb.mp4'; 
+            // အလိုအလျောက် ဒေါင်းလုဒ်ဆွဲခြင်း အမိန့်ပေးခြင်း
+            hiddenDownloadLink.click(); 
         };
 
-        // Search feature
         document.getElementById('searchBtn').onclick = () => {
             const query = document.getElementById('searchInput').value;
             if (query) {
@@ -284,12 +256,10 @@
             }
         };
 
-        // Favorite feature
         document.getElementById('favoriteBtn').onclick = () => {
-            alert('Added to your Favorite collection ❤️!');
+            alert('Added to your Favorite collection ❤️! (Note: To permanently save favorites, a database/backend connection is required).');
         };
 
-        // Comments feature
         document.getElementById('commentInput').onkeypress = function(e) {
             if (e.key === 'Enter' && this.value.trim() !== '') {
                 const commentList = document.getElementById('commentList');
