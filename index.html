@@ -12,296 +12,292 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            padding-bottom: 60px;
         }
-        .header {
+        /* Top Navigation Bar */
+        .nav-bar {
             background-color: #1a1a1a;
-            padding: 12px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 2px solid #ff9900;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
-        .logo {
-            color: #ff9900;
-            font-size: 22px;
+        .logo-text {
+            color: #ffffff;
+            font-size: 24px;
             font-weight: bold;
-            letter-spacing: 1px;
         }
-        .logo span {
-            background-color: #ff9900;
-            color: #000;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 4px;
-        }
-        .search-bar {
-            padding: 10px;
-            background-color: #111;
-            display: flex;
-            gap: 5px;
-        }
-        .search-bar input {
-            flex: 1;
-            padding: 8px;
-            background-color: #222;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            padding: 10px;
-        }
-        .video-card {
-            background-color: #141414;
-            border-radius: 4px;
-            overflow: hidden;
-            border: 1px solid #222;
-            cursor: pointer;
-        }
-        .thumbnail-box {
-            width: 100%;
-            height: 110px;
-            background-color: #222;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .thumbnail-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .duration {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background-color: rgba(0,0,0,0.8);
+        .logo-text span {
             color: #ff9900;
-            font-size: 11px;
-            padding: 2px 4px;
-            border-radius: 2px;
         }
-        .video-info {
-            padding: 8px;
+        
+        /* Inline Ads Section */
+        .inline-ad {
+            background-color: #222;
+            margin: 10px;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px dashed #ff9900;
+            text-align: center;
         }
-        .video-title {
+        .inline-ad-title {
+            color: #ff4500;
             font-size: 13px;
             font-weight: bold;
-            height: 34px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            color: #ccc;
+            margin-bottom: 4px;
         }
-        .video-views {
-            font-size: 11px;
-            color: #666;
-            margin-top: 4px;
+        .inline-ad-text {
+            color: #ddd;
+            font-size: 14px;
         }
 
-        /* Fullscreen Player Ad System */
-        .player-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Main Video Player Area */
+        .main-player-box {
             width: 100%;
-            height: 100%;
-            background-color: #000;
-            z-index: 200;
-            display: none;
-            flex-direction: column;
-        }
-        .player-header {
             background-color: #111;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            border-bottom: 1px solid #222;
-        }
-        .back-btn {
-            color: #ff9900;
-            font-size: 20px;
-            cursor: pointer;
-            background: none;
-            border: none;
+            position: relative;
         }
         .video-screen {
             width: 100%;
-            height: 240px;
-            background-color: #111;
-            position: relative;
+            height: 230px;
+            background-color: #000;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
-        .ad-layer {
+        .play-trigger-btn {
+            background-color: #ff9900;
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            font-size: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 5;
+        }
+        
+        /* 5s Ads Overlay */
+        .ad-countdown-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.95);
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 250;
+            z-index: 20;
         }
-        .ad-title {
+        .countdown-msg {
             color: #ff9900;
             font-size: 18px;
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            text-align: center;
+            padding: 0 20px;
         }
-        .skip-button {
+        .skip-btn {
             background-color: #ff9900;
             color: #000;
             padding: 10px 24px;
             border: none;
             border-radius: 4px;
             font-weight: bold;
-            font-size: 14px;
-            margin-top: 10px;
             cursor: pointer;
             display: none;
         }
-        .main-stream-video {
+        .actual-video {
             width: 100%;
             height: 100%;
             display: none;
         }
-        .play-center-btn {
-            background-color: rgba(255,153,0,0.8);
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 24px;
-            color: #000;
+
+        /* Video Details & Action Buttons */
+        .video-details {
+            padding: 12px;
+        }
+        .video-main-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            margin: 0 0 8px 0;
+        }
+        .action-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 15px;
+        }
+        .action-btn {
+            background-color: #1a1a1a;
+            color: #ff9900;
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Related Videos Section */
+        .related-section-title {
+            padding: 10px 12px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #ff9900;
+            background-color: #0d0d0d;
+            border-left: 3px solid #ff9900;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            padding: 12px;
+        }
+        .related-card {
+            background-color: #111;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+        .related-thumb {
+            width: 100%;
+            height: 100px;
+            background-color: #222;
+            position: relative;
+        }
+        .related-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .v-duration {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: rgba(0,0,0,0.8);
+            color: #ff9900;
+            font-size: 10px;
+            padding: 1px 3px;
+            border-radius: 2px;
+        }
+        .related-info {
+            padding: 6px;
+        }
+        .related-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #ccc;
+            height: 32px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">AREA<span>HUB</span></div>
-        <div style="color: #ff9900; font-size: 12px; font-weight: bold;">PREMIUM CLUB</div>
+    <div class="nav-bar">
+        <div class="logo-text">❌<span>VIDEOS</span></div>
+        <div style="font-size: 12px; color: #ff9900; font-weight: bold;">PREMIUM PLAYER</div>
     </div>
 
-    <div class="search-bar">
-        <input type="text" placeholder="Search videos...">
+    <div class="inline-ad">
+        <div class="inline-ad-title">🔥 CHATURBATE INLINE ADS</div>
+        <div class="inline-ad-text">SHE DOESN'T PLAY INNOCENT 😈</div>
     </div>
 
-    <div class="video-grid" id="videoGrid">
-        </div>
-
-    <div class="player-modal" id="playerModal">
-        <div class="player-header">
-            <button class="back-btn" id="closePlayer">⬅</button>
-            <span id="playingTitle">Loading video...</span>
-        </div>
+    <div class="main-player-box">
         <div class="video-screen">
-            <video class="main-stream-video" id="mainVideo" controls>
+            <button class="play-trigger-btn" id="playBtn">▶</button>
+
+            <video class="actual-video" id="videoPlayer" controls>
                 <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
             </video>
 
-            <button class="play-center-btn" id="startPlayBtn" style="display: none;">▶</button>
-
-            <div class="ad-layer" id="adLayer">
-                <div class="ad-title">SPONSORED ADVERTISEMENT</div>
-                <div id="adTimer" style="color: #aaa; font-size: 14px;">Ad choices: Video will start in <span id="sec">5</span>s...</div>
-                <button class="skip-button" id="skipAdBtn">SKIP AD & WATCH</button>
+            <div class="ad-countdown-overlay" id="adOverlay">
+                <div class="countdown-msg" id="adMsg">ကြော်ငြာ ၅ စက္ကန့် ကြည့်ရမည်... (<span id="timerBox">5</span>)</div>
+                <button class="skip-btn" id="skipAdBtn">SKIP AD & WATCH VIDEO</button>
             </div>
         </div>
-        <div style="padding: 15px;">
-            <h3 style="color: #ff9900; margin: 0 0 10px 0;">Video Description</h3>
-            <p style="color: #aaa; font-size: 13px; margin: 0;">High speed premium streaming connection stable. Powered by Area Hub Land Network.</p>
+    </div>
+
+    <div class="video-details">
+        <h1 class="video-main-title">Premium Exclusive Studio Collection Movie (1080p)</h1>
+        <div style="font-size: 12px; color: #666;">10M Views • 100% Rating</div>
+        
+        <div class="action-row">
+            <button class="action-btn" onclick="alert('Downloading started...')">📥 Download Video</button>
+            <button class="action-btn" onclick="alert('Added to Watchlist')">⭐ Watch Later</button>
+        </div>
+    </div>
+
+    <div class="related-section-title">RELATED VIDEOS</div>
+    <div class="related-grid">
+        <div class="related-card" onclick="alert('Loading this video...')">
+            <div class="related-thumb">
+                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
+                <div class="v-duration">21 min</div>
+            </div>
+            <div class="related-info">
+                <div class="related-title">Beautiful Asian Private Show Mix Collection</div>
+            </div>
+        </div>
+        <div class="related-card" onclick="alert('Loading this video...')">
+            <div class="related-thumb">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
+                <div class="v-duration">15 min</div>
+            </div>
+            <div class="related-info">
+                <div class="related-title">Top Model Exclusive Studio Photoshoot Behind</div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Initialize Telegram WebApp
+        // Telegram WebApp Setup
         window.Telegram.WebApp.ready();
         window.Telegram.WebApp.expand();
 
-        // Sample Video Data
-        const videos = [
-            { id: 1, title: "Premium Asian Solo Exclusive Studio Mix", views: "1.2M views", duration: "12:45", thumb: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400" },
-            { id: 2, title: "Beautiful Model Private Dance Collection Hot", views: "850K views", duration: "18:20", thumb: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400" },
-            { id: 3, title: "Japanese Style Room Secret Club Update v1", views: "2.4M views", duration: "24:05", thumb: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400" },
-            { id: 4, title: "Top Premium Model Photoshoot Behind Scenes", views: "410K views", duration: "09:15", thumb: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400" }
-        ];
+        const playBtn = document.getElementById('playBtn');
+        const adOverlay = document.getElementById('adOverlay');
+        const timerBox = document.getElementById('timerBox');
+        const skipAdBtn = document.getElementById('skipAdBtn');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const adMsg = document.getElementById('adMsg');
 
-        const grid = document.getElementById('videoGrid');
-        videos.forEach(v => {
-            grid.innerHTML += `
-                <div class="video-card" onclick="openVideoPlayer('${v.title}')">
-                    <div class="thumbnail-box">
-                        <img src="${v.thumb}">
-                        <div class="duration">${v.duration}</div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">${v.title}</div>
-                        <div class="video-views">${v.views}</div>
-                    </div>
-                </div>
-            `;
-        });
-
-        function openVideoPlayer(title) {
-            document.getElementById('playerModal').style.display = 'flex';
-            document.getElementById('playingTitle').innerText = title;
+        playBtn.addEventListener('click', () => {
+            playBtn.style.display = 'none';
+            adOverlay.style.display = 'flex'; // Show Countdown Ads
             
-            // Reset and Start Ads Countdown
-            document.getElementById('adLayer').style.display = 'flex';
-            document.getElementById('skipAdBtn').style.display = 'none';
-            document.getElementById('adTimer').style.display = 'block';
-            document.getElementById('startPlayBtn').style.display = 'none';
-            document.getElementById('mainVideo').style.display = 'none';
-            document.getElementById('mainVideo').pause();
+            let timeRemaining = 5;
+            timerBox.innerText = timeRemaining;
 
-            let timeLeft = 5;
-            document.getElementById('sec').innerText = timeLeft;
-
-            const countdown = setInterval(() => {
-                timeLeft--;
-                document.getElementById('sec').innerText = timeLeft;
-                if(timeLeft <= 0) {
-                    clearInterval(countdown);
-                    document.getElementById('adTimer').style.display = 'none';
-                    document.getElementById('skipAdBtn').style.display = 'block';
+            const counter = setInterval(() => {
+                timeRemaining--;
+                timerBox.innerText = timeRemaining;
+                if(timeRemaining <= 0) {
+                    clearInterval(counter);
+                    adMsg.style.display = 'none';
+                    skipAdBtn.style.display = 'block'; // Show Skip button
                 }
             }, 1000);
-        }
-
-        document.getElementById('skipAdBtn').addEventListener('click', () => {
-            document.getElementById('adLayer').style.display = 'none';
-            document.getElementById('startPlayBtn').style.display = 'block';
         });
 
-        document.getElementById('startPlayBtn').addEventListener('click', () => {
-            document.getElementById('startPlayBtn').style.display = 'none';
-            const video = document.getElementById('mainVideo');
-            video.style.display = 'block';
-            video.play();
-        });
-
-        document.getElementById('closePlayer').addEventListener('click', () => {
-            document.getElementById('playerModal').style.display = 'none';
-            document.getElementById('mainVideo').pause();
+        skipAdBtn.addEventListener('click', () => {
+            adOverlay.style.display = 'none';
+            videoPlayer.style.display = 'block';
+            videoPlayer.play(); // Auto Play Main Video
         });
     </script>
 </body>
