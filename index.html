@@ -3,201 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Downloader</title>
+    <title>Hub</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * { box-sizing: border-box; }
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            background-color: #f4f4f4; 
-            padding-bottom: 70px; 
-        }
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #111; color: #fff; padding-bottom: 70px; }
         
-        .header { 
-            padding: 15px; 
-            font-size: 20px; 
-            font-weight: bold; 
-            background: #fff; 
-            border-bottom: 1px solid #ddd; 
-        }
+        .header { padding: 15px; font-size: 20px; font-weight: bold; background: #000; border-bottom: 1px solid #333; text-align: center; color: #ff5577; }
         
-        /* Inline Ads Style (MPT Banner) */
-        .inline-ads { 
-            background: #fff; 
-            padding: 12px; 
-            margin: 10px; 
-            border: 1px solid #ddd; 
-            border-radius: 5px; 
-        }
-        .ads-title { font-weight: bold; font-size: 14px; color: #333; }
-        .ads-desc { font-size: 13px; color: #666; margin-top: 4px; }
-        .sub-btn { 
-            background: #0088cc; 
-            color: #fff; 
-            border: none; 
-            padding: 10px; 
-            width: 100%; 
-            margin-top: 10px; 
-            font-weight: bold; 
-            border-radius: 4px;
-            cursor: pointer;
-        }
+        /* Inline Ads Banner */
+        .inline-ads { background: #1a1a1a; padding: 12px; margin: 10px; border: 1px solid #333; border-radius: 5px; text-align: center; }
+        .sub-btn { background: #ff5577; color: #fff; border: none; padding: 10px 20px; width: 100%; margin-top: 10px; font-weight: bold; border-radius: 4px; cursor: pointer; }
         
-        /* Video List Item */
-        .video-list { background: #fff; margin-top: 10px; }
-        .video-item { 
-            display: flex; 
-            align-items: center; 
-            padding: 12px; 
-            background: #fff; 
-            border-bottom: 1px solid #eee; 
-            cursor: pointer;
-        }
-        .thumb { 
-            width: 120px; 
-            height: 70px; 
-            background: #222; 
-            margin-right: 15px; 
-            position: relative;
-            border-radius: 3px;
-        }
-        .thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .duration { 
-            position: absolute; 
-            bottom: 4px; 
-            right: 4px; 
-            background: rgba(0,0,0,0.7); 
-            color: #fff; 
-            font-size: 10px; 
-            padding: 2px 4px; 
-            border-radius: 2px; 
-        }
-        .info { flex: 1; font-size: 15px; font-weight: bold; color: #333; }
+        /* Video List */
+        .video-list { background: #000; margin-top: 10px; }
+        .video-item { display: flex; align-items: center; padding: 12px; background: #111; border-bottom: 1px solid #222; cursor: pointer; }
+        .thumb { width: 120px; height: 70px; background: #222; margin-right: 15px; position: relative; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .info { flex: 1; font-size: 15px; font-weight: bold; }
         
-        /* Bottom Nav (Home နှင့် Downloads Tab သာပါသည်) */
-        .bottom-nav { 
-            position: fixed; 
-            bottom: 0; 
-            width: 100%; 
-            display: flex; 
-            justify-content: space-around; 
-            background: #fff; 
-            padding: 10px 0; 
-            border-top: 1px solid #ddd; 
-            z-index: 100;
-        }
-        .nav-item { text-align: center; color: #888; font-size: 12px; cursor: pointer; }
-        .nav-item.active { color: #0088cc; font-weight: bold; }
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: #000; padding: 10px 0; border-top: 1px solid #333; z-index: 100; }
+        .nav-item { text-align: center; color: #666; font-size: 12px; cursor: pointer; }
+        .nav-item.active { color: #ff5577; font-weight: bold; }
         
         .page { display: none; }
         .page.active { display: block; }
 
-        /* Separate Download Page */
-        .download-box { 
-            background: #fff; 
-            padding: 20px; 
-            margin: 15px; 
-            border-radius: 6px; 
-            border: 1px solid #ddd; 
-            text-align: center; 
-        }
-        .dl-btn { 
-            background: #ff9900; 
-            color: #000; 
-            border: none; 
-            padding: 12px 24px; 
-            font-size: 16px; 
-            font-weight: bold; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            width: 100%;
-            max-width: 250px;
-            margin-top: 15px;
-        }
-        .back-link { 
-            display: inline-block; 
-            margin-bottom: 15px; 
-            color: #0088cc; 
-            text-decoration: none; 
-            font-weight: bold; 
-            cursor: pointer; 
-        }
+        /* Streamwish Embed Page */
+        .player-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin: 10px; border-radius: 6px; }
+        .player-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        
+        .download-box { background: #111; padding: 20px; margin: 15px; border-radius: 6px; border: 1px solid #333; text-align: center; }
+        .dl-btn { background: #ff9900; color: #000; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; width: 100%; max-width: 250px; margin-top: 15px; }
+        .back-link { display: inline-block; margin-bottom: 15px; color: #ff5577; text-decoration: none; font-weight: bold; cursor: pointer; }
 
-        /* Ad Overlay (5 sec countdown) */
-        #adOverlay { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.95); 
-            color: #fff; 
-            display: none; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 1000; 
-        }
+        /* Ad Overlay */
+        #adOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); color: #fff; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
         .ad-spinner { font-size: 20px; color: #ff9900; font-weight: bold; text-align: center; line-height: 1.6; }
         
-        .empty-state { padding: 40px; text-align: center; color: #888; font-style: italic; }
+        .empty-state { padding: 40px; text-align: center; color: #666; font-style: italic; }
     </style>
 </head>
 <body>
 
-<div class="header">Downloader</div>
+<div class="header">GAY PORN HUB</div>
 
 <div id="homePage" class="page active">
     <div class="inline-ads">
-        <div class="ads-title">Limited Offer</div>
-        <div class="ads-desc">Get a new Bonus offer today! Dial *555# or use the MPT4U app to redeem.</div>
-        <button class="sub-btn" onclick="alert('Redirecting to subscribe...')">SUBSCRIBE</button>
+        <div style="font-weight: bold; color: #ff5577;">PREMIUM PROMO</div>
+        <div style="font-size: 13px; color: #ccc; margin-top: 4px;">Get exclusive VIP access and updates today.</div>
+        <button class="sub-btn" onclick="window.Telegram.WebApp.openLink('https://t.me/+YOUR_VIP_CHANNEL')">JOIN VIP CHANNEL</button>
     </div>
     
     <div class="video-list">
-        <div class="video-item" onclick="openDownloadPage('Beautiful Asian Private Show Mix Collection')">
-            <div class="thumb">
-                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300">
-                <div class="duration">21:05</div>
-            </div>
-            <div class="info">Beautiful Asian Private Show Mix Collection</div>
+        <div class="video-item" onclick="openWatchPage('Muscular Private Show', 'https://streamwish.to/e/embed_code_here')">
+            <div class="thumb">🔥</div>
+            <div class="info">Muscular Private Show</div>
         </div>
-        <div class="video-item" onclick="openDownloadPage('Premium Exclusive Studio Collection Movie (1080p)')">
-            <div class="thumb">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300">
-                <div class="duration">15:39</div>
-            </div>
-            <div class="info">Premium Exclusive Studio Collection Movie (1080p)</div>
-        </div>
-        <div class="video-item" onclick="openDownloadPage('Area Hub Land - Funny Rabbit Animation')">
-            <div class="thumb">
-                <img src="https://images.unsplash.com/photo-1518796794438-51c87aa3752f?w=300">
-                <div class="duration">00:10</div>
-            </div>
-            <div class="info">Area Hub Land - Funny Rabbit Animation</div>
+        <div class="video-item" onclick="openWatchPage('Exclusive Room Collection', 'https://streamwish.to/e/embed_code_here')">
+            <div class="thumb">🔥</div>
+            <div class="info">Exclusive Room Collection</div>
         </div>
     </div>
 </div>
 
-<div id="downloadPage" class="page">
-    <div style="padding: 15px;">
-        <span class="back-link" onclick="switchPage('home')">⬅ Back to Home</span>
+<div id="watchPage" class="page">
+    <div style="padding: 15px;"><span class="back-link" onclick="switchPage('home')">⬅ Back to Home</span></div>
+    
+    <div class="player-container">
+        <iframe id="streamwishIframe" src="" allowfullscreen scrolling="no" allow="autoplay; encrypted-media"></iframe>
     </div>
+
     <div class="download-box">
-        <div class="inline-ads" style="margin-bottom: 20px; border-color: #ff9900;">
-            <div style="font-weight: bold; color: #ff4500; font-size: 12px;">📢 SPONSORED ADS</div>
-            <div style="font-size: 13px; margin-top: 4px;">Exclusive offers available now. Check it out!</div>
-        </div>
-        
-        <h3 id="dlVideoTitle" style="color: #333; margin-bottom: 10px;">Video Title</h3>
-        <p style="color: #666; font-size: 13px;">ဖိုင်ကို ဒေါင်းလုဒ်ဆွဲရန် အသင့်ဖြစ်ပါပြီ။ အောက်ပါခလုတ်ကို နှိပ်ပါ။</p>
-        <button class="dl-btn" onclick="triggerDownloadProcess()">📥 AUTO DOWNLOAD</button>
+        <h3 id="videoTitleDisplay" style="color: #fff; margin-bottom: 10px;">Video Title</h3>
+        <p style="color: #aaa; font-size: 13px;">ဒေါင်းလုဒ်ဆွဲရန် အသင့်ဖြစ်ပါပြီ။ အောက်ပါခလုတ်ကို နှိပ်ပါ။</p>
+        <button class="dl-btn" onclick="triggerDownloadProcess()">📥 DOWNLOAD FILE</button>
     </div>
 </div>
 
 <div id="downloadsPage" class="page">
+    <div class="header">FAVORITES / DOWNLOADS</div>
     <div class="video-list" id="downloadsList">
-        <div class="empty-state">No auto-downloaded files yet.</div>
+        <div class="empty-state">No saved videos yet.</div>
     </div>
 </div>
 
@@ -210,35 +97,39 @@
     <div class="ad-spinner" id="timerText">ကျေးဇူးပြု၍ ကြော်ငြာ (5) စက္ကန့် စောင့်ပေးပါ...<br>ဒေါင်းလုဒ်ဆွဲရန် အသင့်ဖြစ်ပါပြီ။</div>
 </div>
 
-<a id="hiddenDL" href="https://www.w3schools.com/html/mov_bbb.mp4" download="Video.mp4" style="display:none;"></a>
+<a id="hiddenDL" href="https://streamwish.to/d/direct_download_link" download="Video.mp4" style="display:none;"></a>
 
 <script>
+    window.Telegram.WebApp.ready();
+    window.Telegram.WebApp.expand();
+
     let selectedVideoTitle = "";
 
     function switchPage(pageId) {
-        // Hide all pages
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        // Deactivate all navs
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         
-        // Show target page
         document.getElementById(pageId + 'Page').classList.add('active');
         
-        // Activate target nav
+        // Stop iframe when leaving watch page
+        document.getElementById('streamwishIframe').src = "";
+
         if(pageId === 'home') {
             document.getElementById('navHome').classList.add('active');
-            renderDownloadsList(); // Refresh list when switching to downloads
         } else if(pageId === 'downloads') {
             document.getElementById('navDownloads').classList.add('active');
             renderDownloadsList();
         }
+        window.scrollTo(0,0);
     }
 
-    function openDownloadPage(title) {
+    function openWatchPage(title, embedUrl) {
         selectedVideoTitle = title;
-        document.getElementById('dlVideoTitle').innerText = "Download: " + title;
+        document.getElementById('videoTitleDisplay').innerText = title;
+        document.getElementById('streamwishIframe').src = embedUrl;
+        
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('downloadPage').classList.add('active');
+        document.getElementById('watchPage').classList.add('active');
         window.scrollTo(0,0);
     }
 
@@ -252,12 +143,11 @@
         
         let interval = setInterval(() => {
             count--;
-            timerText.innerHTML = "ကျေးဇူးပြု၍ ကြော်ငြာ ("+ count +") စက္kန့် စောင့်ပေးပါ...<br>ဒေါင်းလုဒ်ဆွဲရန် အသင့်ဖြစ်ပါပြီ။";
+            timerText.innerHTML = "ကျေးဇူးပြု၍ ကြော်ငြာ ("+ count +") စက္ကန့် စောင့်ပေးပါ...<br>ဒေါင်းလုဒ်ဆွဲရန် အသင့်ဖြစ်ပါပြီ။";
             if(count <= 0) {
                 clearInterval(interval);
                 overlay.style.display = 'none';
                 
-                // Add to LocalStorage Downloads list
                 let dlList = localStorage.getItem('app_dls');
                 dlList = dlList ? JSON.parse(dlList) : [];
                 if(!dlList.includes(selectedVideoTitle)) {
@@ -265,11 +155,8 @@
                     localStorage.setItem('app_dls', JSON.stringify(dlList));
                 }
                 
-                // Trigger auto download
+                // Trigger direct download
                 document.getElementById('hiddenDL').click();
-                
-                // Switch to Downloads Page Automatically
-                switchPage('downloads');
             }
         }, 1000);
     }
@@ -280,7 +167,7 @@
         dlList = dlList ? JSON.parse(dlList) : [];
         
         if(dlList.length === 0) {
-            container.innerHTML = '<div class="empty-state">No auto-downloaded files yet.</div>';
+            container.innerHTML = '<div class="empty-state">No saved videos yet.</div>';
             return;
         }
         
@@ -289,9 +176,10 @@
             let item = document.createElement('div');
             item.className = 'video-item';
             item.innerHTML = `
-                <div class="thumb" style="background:#0088cc; display:flex; align-items:center; justify-content:center; color:#fff; font-size:20px;">⬇️</div>
-                <div class="info" style="color:#0088cc;">${title} <br><span style="font-size:11px; color:#559900; font-weight:normal;">✅ Downloaded to Device</span></div>
+                <div class="thumb" style="background:#ff5577; display:flex; align-items:center; justify-content:center; color:#fff; font-size:20px;">❤️</div>
+                <div class="info" style="color:#fff;">${title} <br><span style="font-size:11px; color:#ff9900; font-weight:normal;">✅ Saved to Favorites</span></div>
             `;
+            item.onclick = () => openWatchPage(title, 'https://streamwish.to/e/embed_code_here');
             container.appendChild(item);
         });
     }
